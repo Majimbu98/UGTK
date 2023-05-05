@@ -1,0 +1,16 @@
+{
+  "name": "com.maji98.unitygametoolkit",
+  "version": "0.0.1",
+  "displayName": "UnityGameToolkit",
+  "description": "Unity package toolkit for Game Development",
+  "unity": "2021.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "https://docs.google.com/document/d/1h720OAbnC2a6GHPjSGtNFXPCV9eKfFOJmQsviEOsaQo/edit?usp=share_link",
+  "changelogUrl": "https://github.com/Majimbu98/UGTK",
+  "author": {
+    "name": "Marcello De Bonis",
+    "email": "marcello98.videogames@gmail.com",
+    "url": "https://github.com/Majimbu98"
+  },
+  "type": "tool"
+}
