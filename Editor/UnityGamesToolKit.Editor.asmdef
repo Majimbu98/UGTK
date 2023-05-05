@@ -1,6 +1,6 @@
 {
-    "name": "UnityGameToolKit.Editor",
-    "rootNamespace": "UnityGameToolKit.Editor",
+    "name": "UnityGamesToolKit.Editor",
+    "rootNamespace": "UnityGamesToolKit.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"
