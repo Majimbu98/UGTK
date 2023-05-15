@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = System.Random;
 
 
@@ -58,7 +59,12 @@ public static class ListExtensions
             Debug.Log(item.ToString());
         }
     }
-    
+
+    public static Queue<T> ListToQueue<T>(this List<T> list)
+    {
+        return new Queue<T>(list);
+    }
+
     #region Random Elements
 
     /// <summary>
