@@ -5,15 +5,23 @@ using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
 {
-
+    /// <summary>
+    /// Manages a pool of reusable objects.
+    /// </summary>
     public class ObjectPooler : MonoBehaviour
     {
         #region Variables & Properties
 
-        [SerializeField] private List<ObjectToPool> listObjectPoolables;
+        [Header("Object")]
+        [SerializeField] private ObjectToPool objectPoolableInfo;
 
-        private Dictionary<ObjectToPool, List<GameObject>> listsObjectPoolables =
-            new Dictionary<ObjectToPool, List<GameObject>>();
+        [Header("Quantity of the objects")]
+        public int quantity;
+
+        [Header("Whether the quantity list is expandable or not")]
+        public bool expandable;
+
+        private List<IPoolable> objectPoolables = new List<IPoolable>();
 
         #endregion
 
@@ -22,136 +30,76 @@ namespace UnityGamesToolkit.Runtime
         // Awake is called when the script instance is being loaded
         protected void Awake()
         {
-            InitPoolLists();
+            InitializePool();
         }
 
         #endregion
 
         #region Methods
 
-        protected void InitPoolLists()
+        /// <summary>
+        /// Initializes the object pool by creating the initial quantity of objects.
+        /// </summary>
+        private void InitializePool()
         {
-            for (int i = 0; i < listObjectPoolables.Count; i++)
+            for (int i = 0; i < quantity; i++)
             {
-                List<GameObject> objectPoolableList = new List<GameObject>();
-                for (int j = 0; j < listObjectPoolables[i].quantity; j++)
-                {
-                    GameObject obj = Instantiate(listObjectPoolables[i].objectPoolable,
-                        listObjectPoolables[i].transform.position, listObjectPoolables[i].transform.rotation);
-                    obj.GetComponent<ObjectPoolable>().SetParents(listObjectPoolables[i].parentWhenDeactivated,
-                        listObjectPoolables[i].parentWhenActivated);
-                    if (obj == null)
-                    {
-                        Debug.Log("Null");
-                    }
-
-                    obj.gameObject.SetActive(false);
-                    objectPoolableList.Add(obj);
-                    obj.gameObject.GetComponent<ObjectPoolable>().AttachToDeactivatedParent();
-
-                }
-
-                listsObjectPoolables.Add(listObjectPoolables[i], objectPoolableList);
+                InitializeSinglePooledObject();
             }
         }
 
-        protected GameObject GetPooledObject<T>(T itemType)
+        /// <summary>
+        /// Initializes a single object in the pool.
+        /// </summary>
+        private GameObject InitializeSinglePooledObject()
         {
-            var type = itemType.GetType();
-
-            int i = 0;
-            foreach (var key in listsObjectPoolables.Keys)
-            {
-                if (listsObjectPoolables[key][i].GetComponent<ObjectPoolable>().GetType() == type)
-                {
-                    foreach (var item in listsObjectPoolables[key])
-                    {
-                       // if (!item.GetComponent<ObjectPoolable>().IsActive() &&
-                      //      item.GetComponent<ObjectPoolable>().GetType() == type)
-                        {
-                            return item;
-                        }
-
-                    }
-
-                    foreach (var item in listsObjectPoolables[key])
-                    {
-                      //  if (item.GetComponent<ObjectPoolable>().IsActive() && item.GetType() == type)
-                        {
-                            if (key.expandable)
-                            {
-                                Debug.Log(key.ToString() + " pool list in the object " + this.name + " expanded");
-                                for (int j = 0; j < listObjectPoolables.Count; j++)
-                                {
-                                    if (listObjectPoolables[j] == key)
-                                    {
-                                        GameObject obj = Instantiate(listObjectPoolables[j].objectPoolable);
-                                        obj.GetComponent<ObjectPoolable>().SetParents(
-                                            listObjectPoolables[j].parentWhenDeactivated,
-                                            listObjectPoolables[j].parentWhenActivated);
-                                        obj.gameObject.SetActive(false);
-                                        listsObjectPoolables[key].Add(obj);
-                                        return obj;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log(listsObjectPoolables[key][i].GetType().Name + " can't be added into " +
-                                          listsObjectPoolables[key].GetType().Name);
-                            }
-                        }
-                    }
-
-                    break;
-                }
-
-                i++;
-            }
-
-            return null;
+            GameObject gameObject = Instantiate(objectPoolableInfo.objectPoolable);
+            IPoolable poolable = gameObject.GetComponentInChildren<IPoolable>();
+            poolable.Initialize(gameObject, objectPoolableInfo);
+            objectPoolables.Add(poolable);
+            return gameObject;
         }
 
-        protected GameObject SpawnObjectPoolable<T>()
+        /// <summary>
+        /// Sets the die time for a poolable object.
+        /// </summary>
+        protected virtual void SetDieTime(IPoolable poolable)
         {
-
-            var type = typeof(T);
-
-            int i = 0;
-            foreach (var key in listsObjectPoolables.Keys)
-            {
-
-                if (listsObjectPoolables[key][i].GetComponent<ObjectPoolable>().GetType() == type)
-                {
-                    GameObject objectPoolable =
-                        GetPooledObject(listsObjectPoolables[key][i].GetComponent<ObjectPoolable>());
-                    if (objectPoolable != null)
-                    {
-                        objectPoolable.transform.position = key.transform.position;
-                        objectPoolable.transform.rotation = key.transform.rotation;
-                        objectPoolable.gameObject.GetComponent<ObjectPoolable>().AttachToActivatedParent();
-                        Debug.Log("Object " + type.ToString() + " activated!");
-                        objectPoolable.gameObject.SetActive(true);
-                        objectPoolable.gameObject.GetComponent<ObjectPoolable>().OnSpawn();
-
-                        return objectPoolable;
-                    }
-                    else
-                    {
-                        Debug.Log("Not founded");
-                        return objectPoolable;
-                    }
-                }
-
-                i++;
-            }
-
-            return null;
 
         }
 
+        /// <summary>
+        /// Retrieves the first active pooled object from the pool.
+        /// </summary>
+        protected GameObject GetFirstPooledObject()
+        {
+            foreach (IPoolable poolable in objectPoolables)
+            {
+                if (poolable.IsActive())
+                {
+                    return poolable.self;
+                }
+            }
+
+            if (expandable)
+            {
+                return InitializeSinglePooledObject();
+            }
+            else
+            {
+                Debug.LogError("Error! Cannot add " + objectPoolables[0].GetType().ToString() + " type in " + gameObject.name + " pooler list.");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Spawns a poolable object from the pool.
+        /// </summary>
+        protected GameObject SpawnPoolable()
+        {
+            return GetFirstPooledObject();
+        }
 
         #endregion
     }
-
 }

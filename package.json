@@ -1,6 +1,6 @@
 {
   "name": "com.maji98.unitygamestoolkit",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "displayName": "UnityGamesToolkit",
   "description": "Unity package toolkit for Game Development",
   "unity": "2021.1",

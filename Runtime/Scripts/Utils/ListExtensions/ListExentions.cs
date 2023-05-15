@@ -1,7 +1,10 @@
+// © 2023 Marcello De Bonis. All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
+
 
 public static class ListExtensions
 {
