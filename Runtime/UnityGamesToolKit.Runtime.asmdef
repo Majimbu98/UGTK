@@ -1,9 +1,7 @@
 {
     "name": "UnityGamesToolKit.Runtime",
     "rootNamespace": "UnityGamesToolKit.Runtime",
-    "references": [
-        "GUID:27fa674c731f7e440a989f2255c5014f"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
