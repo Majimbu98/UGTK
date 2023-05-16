@@ -1,21 +1,25 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
 {
-
     public static class EventManager
     {
-
         // Defines variables and properties
         #region Variables & Properties
 
-        public static Action<float, Action> OnEndTimeDoAction;
-        public static Action<float, bool, Action, Action, Action> OnEndTimeDoActionElseDoOtherActionElseBoolChangeDoOtherAction;
+        #region AudioAction
+
+        public static Action<S_AudioChannel> OnUpgradeVolume;
+        
+        public static Action<S_Audio> OnStartAudio;
+        public static Action<S_Audio> OnEndAudio;
+        
+        public static Action<S_Audio> OnRepeatLoopAudio;
+
+        #endregion
 
         #endregion
 
@@ -35,7 +39,6 @@ namespace UnityGamesToolkit.Runtime
         }
 
         #endregion
-
     }
 
 }

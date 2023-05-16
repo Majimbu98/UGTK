@@ -1,5 +1,6 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +29,7 @@ namespace UnityGamesToolkit.Runtime
         #region MonoBehaviour
 
         // Awake is called when the script instance is being loaded
-        protected void Awake()
+        protected void Start()
         {
             InitializePool();
         }
@@ -44,40 +45,36 @@ namespace UnityGamesToolkit.Runtime
         {
             for (int i = 0; i < quantity; i++)
             {
-                InitializeSinglePooledObject();
+                objectPoolables.Add(InitializeSinglePooledObject());
             }
         }
 
         /// <summary>
         /// Initializes a single object in the pool.
         /// </summary>
-        private GameObject InitializeSinglePooledObject()
+        private IPoolable InitializeSinglePooledObject()
         {
             GameObject gameObject = Instantiate(objectPoolableInfo.objectPoolable);
-            IPoolable poolable = gameObject.GetComponentInChildren<IPoolable>();
+            IPoolable poolable = GetIPoolableFrom(gameObject);
             poolable.Initialize(gameObject, objectPoolableInfo);
-            objectPoolables.Add(poolable);
-            return gameObject;
+            return poolable;
         }
 
-        /// <summary>
-        /// Sets the die time for a poolable object.
-        /// </summary>
-        protected virtual void SetDieTime(IPoolable poolable)
+        private IPoolable GetIPoolableFrom(GameObject gameObject)
         {
-
+            return gameObject.GetComponentInChildren<IPoolable>();
         }
 
         /// <summary>
         /// Retrieves the first active pooled object from the pool.
         /// </summary>
-        protected GameObject GetFirstPooledObject()
+        public IPoolable GetFirstPooledObject()
         {
             foreach (IPoolable poolable in objectPoolables)
             {
-                if (poolable.IsActive())
+                if (!poolable.IsActive())
                 {
-                    return poolable.self;
+                    return poolable;
                 }
             }
 
@@ -95,9 +92,20 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Spawns a poolable object from the pool.
         /// </summary>
-        protected GameObject SpawnPoolable()
+        public GameObject SpawnPoolable(IPoolable poolable)
         {
-            return GetFirstPooledObject();
+            poolable.Spawn();
+            return poolable.self;
+        }
+        
+        /// <summary>
+        /// Spawns a poolable object from the pool and set his temporary dieTime.
+        /// </summary>
+        public GameObject SpawnPoolable(IPoolable poolable ,float dieTime)
+        {
+            poolable.SetDieTime(dieTime);
+            poolable.Spawn();
+            return poolable.self;
         }
 
         #endregion

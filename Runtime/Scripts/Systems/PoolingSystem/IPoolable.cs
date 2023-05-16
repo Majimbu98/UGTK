@@ -1,5 +1,6 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
+using System;
 using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
@@ -12,11 +13,13 @@ namespace UnityGamesToolkit.Runtime
         // Defines variables and properties
         #region Variables & Properties
         
-        GameObject self { get; set; }
-        Transform transformObject{ get; set; }
-        GameObject parentWhenActivated { get; set; }
-        GameObject parentWhenDeactivated { get; set; }
-        float dieTime { get; set; }
+        public GameObject self { get; set; }
+        public Transform transformObject{ get; set; }
+        public GameObject parentWhenActivated { get; set; }
+        public GameObject parentWhenDeactivated { get; set; }
+        public float dieTime { get; set; }
+        public Action actionOnSpawn { get; set; }
+        public Action actionOnDespawn { get; set; }
         
         #endregion
 
@@ -53,8 +56,8 @@ namespace UnityGamesToolkit.Runtime
         public void Initialize(GameObject obj, ObjectToPool objectToPool)
         {
             self = obj;
-            parentWhenActivated = objectToPool.parentWhenActivated;
-            parentWhenDeactivated = objectToPool.parentWhenDeactivated;
+            parentWhenActivated = objectToPool.activatedParent;
+            parentWhenDeactivated = objectToPool.deactivatedParent;
             dieTime = objectToPool.dieTime;
             transformObject = objectToPool.transformObject;
             Despawn();
@@ -68,6 +71,7 @@ namespace UnityGamesToolkit.Runtime
             self.SetActive(true);
             SetTransform();
             AttachToActivatedParent();
+            actionOnSpawn?.Invoke();
             if (dieTime != 0)
             {
                 Timer.DoAfterTime(dieTime, Despawn);
@@ -81,17 +85,28 @@ namespace UnityGamesToolkit.Runtime
         {
             if (IsActive())
             {
+                actionOnDespawn?.Invoke();
                 AttachToDeactivatedParent();
                 self.SetActive(false);
             }
         }
-        
+
         /// <summary>
         /// Sets the die time for the poolable object.
         /// </summary>
         public void SetDieTime(float _dieTime)
         {
             dieTime = _dieTime;
+        }
+
+        public void SetActionOnSpawn(Action _onSpawn)
+        {
+            actionOnSpawn = _onSpawn;
+        }
+        
+        public void SetActionOnDespawn(Action _onDespawn)
+        {
+            actionOnDespawn = _onDespawn;
         }
 
         /// <summary>

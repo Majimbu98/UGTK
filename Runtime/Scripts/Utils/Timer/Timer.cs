@@ -66,6 +66,11 @@ namespace UnityGamesToolkit.Runtime
         {
             Coroutine.Instance.StartCoroutine(DoAfterTimeIfBoolChangesCoroutine(time, boolValue, action));
         }
+
+        public static void DuringTimeIfBoolChangesDoElse(float time, bool boolValue, Action firstAction, Action secondAction)
+        {
+            
+        }
         
         #endregion
         
