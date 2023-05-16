@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsPersistent: 1
-  master: {fileID: 11400000, guid: 36a857ea24754c04b9d50393c4788763, type: 2}
+  master: {fileID: 0}
 --- !u!114 &868562498864340298
 MonoBehaviour:
   m_ObjectHideFlags: 0
