@@ -1,6 +1,6 @@
-using System.Collections;
+// © 2023 Marcello De Bonis. All rights reserved
+
 using System.Collections.Generic;
-using PlasticPipe.PlasticProtocol.Client.Proxies;
 using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
