@@ -28,7 +28,8 @@ namespace UnityGamesToolkit.Runtime
 
         #region MonoBehaviour
 
-        // Awake is called when the script instance is being loaded
+        // Summary:
+        // Awake is called when the script instance is being loaded.
         protected void Start()
         {
             InitializePool();
@@ -60,14 +61,18 @@ namespace UnityGamesToolkit.Runtime
             return poolable;
         }
 
+        /// <summary>
+        /// Retrieves the IPoolable component from the given GameObject.
+        /// </summary>
         private IPoolable GetIPoolableFrom(GameObject gameObject)
         {
             return gameObject.GetComponentInChildren<IPoolable>();
         }
 
         /// <summary>
-        /// Retrieves the first active pooled object from the pool.
+        /// Retrieves the first inactive pooled object from the pool.
         /// </summary>
+        /// <returns>The first inactive pooled object or null if the pool is not expandable.</returns>
         public IPoolable GetFirstPooledObject()
         {
             foreach (IPoolable poolable in objectPoolables)
@@ -92,6 +97,8 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Spawns a poolable object from the pool.
         /// </summary>
+        /// <param name="poolable">The IPoolable object to spawn.</param>
+        /// <returns>The spawned GameObject.</returns>
         public GameObject SpawnPoolable(IPoolable poolable)
         {
             poolable.Spawn();
@@ -99,8 +106,11 @@ namespace UnityGamesToolkit.Runtime
         }
         
         /// <summary>
-        /// Spawns a poolable object from the pool and set his temporary dieTime.
+        /// Spawns a poolable object from the pool and sets its temporary dieTime.
         /// </summary>
+        /// <param name="poolable">The IPoolable object to spawn.</param>
+        /// <param name="dieTime">The temporary die time for the spawned object.</param>
+        /// <returns>The spawned GameObject.</returns>
         public GameObject SpawnPoolable(IPoolable poolable ,float dieTime)
         {
             poolable.SetDieTime(dieTime);

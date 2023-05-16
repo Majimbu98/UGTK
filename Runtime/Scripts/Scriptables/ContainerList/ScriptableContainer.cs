@@ -4,9 +4,14 @@ using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
 {
+    // Summary:
+    // Base abstract class for a scriptable container.
+    // This class is a generic class and inherits from ScriptableObject.
+    // The generic parameter T must be a type that derives from Content<T> and has a parameterless constructor.
     public abstract class ScriptableContainer<T> : ScriptableObject where T : Content<T>, new()
     {
-        //[Serializable]
+        // Summary:
+        // The content of the container.
         public T content;
     }
 }

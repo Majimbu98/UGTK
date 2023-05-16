@@ -2,8 +2,16 @@
 
 namespace UnityGamesToolkit.Runtime
 {
+    /// <summary>
+    /// Interface for cloning objects.
+    /// </summary>
+    /// <typeparam name="T">The type of object to clone.</typeparam>
     public interface IClonable<T>
     {
-        public T Clone();
+        /// <summary>
+        /// Creates a clone of the object.
+        /// </summary>
+        /// <returns>A clone of the object.</returns>
+        T Clone();
     }
 }

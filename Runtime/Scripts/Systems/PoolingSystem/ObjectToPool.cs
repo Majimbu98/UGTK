@@ -2,7 +2,6 @@
 
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UnityGamesToolkit.Runtime
 {
@@ -25,7 +24,8 @@ namespace UnityGamesToolkit.Runtime
         [Header("The time after the object deactivates. Set to 0 if not used.")]
         public float dieTime;
         
-        //If dieTime is different from 0, it will be an action that the object will do after deactivated
+        // Summary:
+        // Action to be executed by the object after the dieTime has passed.
         private Action actionToDoAfterDieTime;
     }
 }
