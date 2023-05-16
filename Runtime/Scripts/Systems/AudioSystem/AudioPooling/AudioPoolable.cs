@@ -46,7 +46,17 @@ namespace UnityGamesToolkit.Runtime
                 {
                         audioSource.volume = audioChannel.content.volume * AudioSystem.Instance.master.content.volume;
                 }
-                
+
+                public void Mute()
+                {
+                        audioSource.volume = 0;
+                }
+
+                public void Demute()
+                {
+                        ChangeVolume();
+                }
+
                 #endregion
 
                 #region Interface Implementation

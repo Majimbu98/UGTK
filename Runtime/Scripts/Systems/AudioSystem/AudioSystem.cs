@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 namespace UnityGamesToolkit.Runtime
 {
@@ -32,6 +33,8 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnEndAudio += DestroyAudio;
             EventManager.OnRepeatLoopAudio += SpawnAudio;
             EventManager.OnUpgradeVolume += ChangeVolume;
+            EventManager.OnMuteChannel += MuteVolume;
+            EventManager.OnDemuteChannel += DemuteVolume;
         }
 
         // Called when the object is disabled
@@ -41,6 +44,8 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnEndAudio -= DestroyAudio;
             EventManager.OnRepeatLoopAudio -= SpawnAudio;
             EventManager.OnUpgradeVolume -= ChangeVolume;
+            EventManager.OnMuteChannel -= MuteVolume;
+            EventManager.OnDemuteChannel -= DemuteVolume;
         }
 
         #endregion
@@ -92,6 +97,28 @@ namespace UnityGamesToolkit.Runtime
                 if (audio.s_audio.content.channel == channel)
                 {
                     audio.ChangeVolume();
+                }
+            }
+        }
+
+        private void MuteVolume(S_AudioChannel channel)
+        {
+            foreach (AudioPoolable audio in clipInExecution)
+            {
+                if (audio.s_audio.content.channel == channel)
+                {
+                    audio.Mute();
+                }
+            }
+        }
+
+        private void DemuteVolume(S_AudioChannel channel)
+        {
+            foreach (AudioPoolable audio in clipInExecution)
+            {
+                if (audio.s_audio.content.channel == channel)
+                {
+                    audio.Demute();
                 }
             }
         }

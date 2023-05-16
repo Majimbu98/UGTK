@@ -13,6 +13,8 @@ namespace UnityGamesToolkit.Runtime
         #region AudioAction
 
         public static Action<S_AudioChannel> OnUpgradeVolume;
+        public static Action<S_AudioChannel> OnMuteChannel;
+        public static Action<S_AudioChannel> OnDemuteChannel;
         
         public static Action<S_Audio> OnStartAudio;
         public static Action<S_Audio> OnEndAudio;

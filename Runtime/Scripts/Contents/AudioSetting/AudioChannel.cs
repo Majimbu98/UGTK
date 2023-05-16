@@ -7,12 +7,36 @@ namespace UnityGamesToolkit.Runtime
     [System.Serializable]
     public class AudioChannel : Content<AudioChannel>
     {
-        [SerializeField] [Range(0f, 1f)] public float volume;
         [SerializeField] private S_AudioChannel self;
+        [SerializeField] [Range(0f, 1f)] public float volume;
+        [SerializeField] private bool mute;
         
-        public float Percentage()
+        public float VolumePercentage()
         {
             return volume / 1;
+        }
+
+        public void ChangeMuteButton()
+        {
+            mute = !mute;
+            if (mute)
+            {
+                Mute();
+            }
+            else
+            {
+                Demute();
+            }
+        }
+        
+        public void Mute()
+        {
+            EventManager.OnMuteChannel?.Invoke(self);
+        }
+
+        public void Demute()
+        {
+            EventManager.OnDemuteChannel?.Invoke(self);
         }
         
         public void IncreaseVolumeOf(float volumeToIncrease = 0.1f)
