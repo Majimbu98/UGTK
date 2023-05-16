@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Music
   m_EditorClassIdentifier: 
   content:
-    volume: 0.514
+    self: {fileID: 11400000}
+    volume: 0.445
+    mute: 0

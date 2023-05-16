@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Ambience
   m_EditorClassIdentifier: 
   content:
+    self: {fileID: 11400000}
     volume: 0
+    mute: 0
