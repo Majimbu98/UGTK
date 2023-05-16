@@ -44,7 +44,10 @@ namespace UnityGamesToolkit.Runtime
                 
                 public void ChangeVolume()
                 {
-                        audioSource.volume = audioChannel.content.volume * AudioSystem.Instance.master.content.volume;
+                        if (!s_audio.content.channel.content.mute)
+                        {
+                                audioSource.volume = audioChannel.content.volume * AudioSystem.Instance.master.content.volume;    
+                        }
                 }
 
                 public void Mute()

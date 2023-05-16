@@ -9,16 +9,21 @@ namespace UnityGamesToolkit.Runtime
     {
         [SerializeField] private S_AudioChannel self;
         [SerializeField] [Range(0f, 1f)] public float volume;
-        [SerializeField] private bool mute;
+        [SerializeField] public bool mute;
         
         public float VolumePercentage()
         {
             return volume / 1;
         }
 
-        public void ChangeMuteButton()
+        public void PressMuteButton()
         {
             mute = !mute;
+            ChangeMute();
+        }
+        
+        public void ChangeMute()
+        {
             if (mute)
             {
                 Mute();
@@ -38,25 +43,27 @@ namespace UnityGamesToolkit.Runtime
         {
             EventManager.OnDemuteChannel?.Invoke(self);
         }
+
+        public void SetVolume(float _volume)
+        {
+            volume = _volume;
+            EventManager.OnUpgradeVolume?.Invoke(self);
+        }
         
         public void IncreaseVolumeOf(float volumeToIncrease = 0.1f)
         {
-            if (volume + volumeToIncrease > 1)
+            if (volume + volumeToIncrease < 1)
             {
-                volume += volumeToIncrease;
+                SetVolume(volume + volumeToIncrease);
             }
-            
-            EventManager.OnUpgradeVolume?.Invoke(self);
         }
         
         public void DecreaseVolumeOf(float volumeToDecrease = 0.1f)
         {
-            if (volume - volumeToDecrease < 0)
+            if (volume - volumeToDecrease > 0)
             {
-                volume -= volumeToDecrease;
+                SetVolume(volume - volumeToDecrease);
             }
-            
-            EventManager.OnUpgradeVolume?.Invoke(self);
         }
     }
 }
