@@ -64,7 +64,14 @@ namespace UnityGamesToolkit.Runtime
 
         private void SpawnAudio(S_Audio audio)
         {
-            clipInExecution.Add(audioPooler.SpawnAudio(audio));
+            if (audio != null)
+            {
+                clipInExecution.Add(audioPooler.SpawnAudio(audio));
+            }
+            else
+            {
+                Debug.Log("Error: Audio null!!!");
+            }
         }
 
         private void DestroyAudio(S_Audio audio)
