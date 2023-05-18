@@ -130,6 +130,19 @@ namespace UnityGamesToolkit.Runtime
                 }
             }
         }
+
+        public bool IsAudioReproducing(S_Audio audio)
+        {
+            foreach (AudioPoolable m_audio in clipInExecution)
+            {
+                if (m_audio.s_audio == audio)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
         
         #endregion
 
