@@ -8,7 +8,7 @@ namespace UnityGamesToolkit.Runtime
     // Scriptable object class representing an audio channel.
     // This class inherits from the generic ScriptableContainer class with AudioChannel as the generic parameter.
     // It is used to create custom audio channels in the Unity editor.
-    [CreateAssetMenu(menuName = "New Custom Scriptable/ New Audio Channel")]
+    [CreateAssetMenu(menuName = "New Custom Scriptable/Audio/New Audio Channel")]
     public class S_AudioChannel : ScriptableContainer<AudioChannel>
     {
     #if UNITY_EDITOR

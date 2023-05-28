@@ -1,64 +1,176 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
 {
-    // Summary:
-    // Static class for managing events in the game.
+    /// <summary>
+    /// Static class for managing events in the game.
+    /// </summary>
     public static class EventManager
     {
-        // Summary:
-        // Defines variables and properties for event actions.
-
         #region Variables & Properties
 
         #region AudioAction
 
-        // Summary:
-        // Event action invoked when an audio channel's volume is upgraded.
+        /// <summary>
+        /// Event action invoked when an audio channel's volume is upgraded.
+        /// </summary>
         public static Action<S_AudioChannel> OnUpgradeVolume;
 
-        // Summary:
-        // Event action invoked when an audio channel is muted.
+        /// <summary>
+        /// Event action invoked when an audio channel is muted.
+        /// </summary>
         public static Action<S_AudioChannel> OnMuteChannel;
 
-        // Summary:
-        // Event action invoked when an audio channel is demuted.
+        /// <summary>
+        /// Event action invoked when an audio channel is demuted.
+        /// </summary>
         public static Action<S_AudioChannel> OnDemuteChannel;
 
-        // Summary:
-        // Event action invoked when an audio starts playing.
-        public static Action<S_Audio> OnStartAudio;
+        /// <summary>
+        /// Event action invoked when an audio starts playing.
+        /// </summary>
+        public static Action<S_Audio> OnPlayAudio;
 
-        // Summary:
-        // Event action invoked when an audio ends.
-        public static Action<S_Audio> OnEndAudio;
+        /// <summary>
+        /// Event action invoked when an audio starts playing with an action to be executed at the end.
+        /// </summary>
+        public static Action<S_Audio, Action> OnPlayAudioWithActionAtEnd;
 
-        // Summary:
-        // Event action invoked when an audio repeats its loop.
+        /// <summary>
+        /// Event action invoked when an audio stops playing.
+        /// </summary>
+        public static Action<S_Audio> OnStopAudio;
+
+        /// <summary>
+        /// Event action invoked when an audio repeats its loop.
+        /// </summary>
         public static Action<S_Audio> OnRepeatLoopAudio;
 
-        #endregion
+        /// <summary>
+        /// Event action invoked when an audio cluster starts playing.
+        /// </summary>
+        public static Action<S_AudioCluster> OnPlayAudioCluster;
+
+        /// <summary>
+        /// Event action invoked when the next audio cluster song starts playing.
+        /// </summary>
+        public static Action<S_AudioCluster> OnNextAudioCluster;
+
+        /// <summary>
+        /// Event action invoked when an audio cluster stops playing.
+        /// </summary>
+        public static Action<S_AudioCluster> OnStopAudioCluster;
+
+        /// <summary>
+        /// List of currently reproducing audio clusters.
+        /// </summary>
+        public static List<S_AudioCluster> reproducingCluster;
 
         #endregion
 
-        // Summary:
-        // Initializes the EventManager.
+        #endregion
+
+        #region Initialization/Deleting
+
+        /// <summary>
+        /// Initializes the EventManager.
+        /// </summary>
         [RuntimeInitializeOnLoadMethod]
         private static void Init()
         {
             Application.quitting += Shutdown;
+            OnPlayAudioCluster += PlayAudioCluster;
+            OnNextAudioCluster += NextAudioCluster;
+            OnStopAudioCluster += StopAudioCluster;
+
+            InitVariables();
         }
 
-        // Summary:
-        // Shuts down the EventManager.
+        /// <summary>
+        /// Initializes the variables used by the EventManager.
+        /// </summary>
+        private static void InitVariables()
+        {
+            reproducingCluster = new List<S_AudioCluster>();
+        }
+
+        /// <summary>
+        /// Shuts down the EventManager.
+        /// </summary>
         private static void Shutdown()
         {
-            // Add shutdown logic here
+            OnPlayAudioCluster -= PlayAudioCluster;
+            OnNextAudioCluster -= NextAudioCluster;
+            OnStopAudioCluster -= StopAudioCluster;
+
+            ClearVariables();
         }
 
-    }
+        /// <summary>
+        /// Clears the variables used by the EventManager.
+        /// </summary>
+        private static void ClearVariables()
+        {
+            reproducingCluster.Clear();
+        }
 
+        #endregion
+
+        #region AudioClusterMethods
+
+        /// <summary>
+        /// Starts playing an audio cluster.
+        /// </summary>
+        private static void PlayAudioCluster(S_AudioCluster audioCluster)
+        {
+            audioCluster.ResetIndex();
+            OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(), () => { OnNextAudioCluster?.Invoke(audioCluster); });
+            reproducingCluster.Add(audioCluster);
+        }
+
+        /// <summary>
+        /// Plays the next song in the audio cluster.
+        /// </summary>
+        private static void NextAudioCluster(S_AudioCluster audioCluster)
+        {
+            if (reproducingCluster.Contains(audioCluster))
+            {
+                if (audioCluster.CurrentSong().content.loop)
+                {
+                    OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
+                        () => { OnNextAudioCluster?.Invoke(audioCluster); });
+                }
+                else
+                {
+                    OnStopAudio?.Invoke(audioCluster.CurrentSong());
+                    audioCluster.IncreaseSongIndex();
+                    if (audioCluster.ExistCurrentSong())
+                    {
+                        OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
+                            () => { OnNextAudioCluster?.Invoke(audioCluster); });
+                    }
+                    else
+                    {
+                        OnStopAudioCluster?.Invoke(audioCluster);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stops playing an audio cluster.
+        /// </summary>
+        private static void StopAudioCluster(S_AudioCluster audioCluster)
+        {
+            reproducingCluster.Remove(audioCluster);
+            OnStopAudio?.Invoke(audioCluster.CurrentSong());
+            audioCluster.ResetIndex();
+        }
+
+        #endregion
+    }
 }

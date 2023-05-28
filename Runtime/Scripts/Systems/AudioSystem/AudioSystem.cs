@@ -1,55 +1,58 @@
 // © 2023 Marcello De Bonis. All rights reserved
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
 {
-
+    /// <summary>
+    /// Manages the audio system in the game.
+    /// </summary>
     public class AudioSystem : Singleton<AudioSystem>
     {
-
-        // Defines variables and properties
         #region Variables & Properties
 
-        [SerializeField] public S_AudioChannel master;
-        private AudioPooler audioPooler;
-        private List<AudioPoolable> clipInExecution = new List<AudioPoolable>();
+        [SerializeField] public S_AudioChannel master; // The master audio channel.
+        private AudioPooler audioPooler; // The audio pooler component.
+        private List<AudioPoolable> clipInExecution = new List<AudioPoolable>(); // List of currently playing audio clips.
 
         #endregion
 
-        // Defines MonoBehaviour lifecycle events
         #region MonoBehaviour
 
-
-        #region Activation/Deactivation
-
-        // Called when the object is enabled
+        /// <summary>
+        /// Called when the object is enabled.
+        /// </summary>
         protected override void OnEnable()
         {
             base.OnEnable();
-            EventManager.OnStartAudio += SpawnAudio;
-            EventManager.OnEndAudio += DestroyAudio;
+            EventManager.OnPlayAudio += SpawnAudio;
+            EventManager.OnStopAudio += DestroyAudio;
             EventManager.OnRepeatLoopAudio += SpawnAudio;
             EventManager.OnUpgradeVolume += ChangeVolume;
             EventManager.OnMuteChannel += MuteVolume;
             EventManager.OnDemuteChannel += DemuteVolume;
+            EventManager.OnPlayAudioWithActionAtEnd += SpawnAudioWithActionAtEnd;
         }
 
-        // Called when the object is disabled
+        /// <summary>
+        /// Called when the object is disabled.
+        /// </summary>
         void OnDisable()
         {
-            EventManager.OnStartAudio -= SpawnAudio;
-            EventManager.OnEndAudio -= DestroyAudio;
+            EventManager.OnPlayAudio -= SpawnAudio;
+            EventManager.OnStopAudio -= DestroyAudio;
             EventManager.OnRepeatLoopAudio -= SpawnAudio;
             EventManager.OnUpgradeVolume -= ChangeVolume;
             EventManager.OnMuteChannel -= MuteVolume;
             EventManager.OnDemuteChannel -= DemuteVolume;
+            EventManager.OnPlayAudioWithActionAtEnd -= SpawnAudioWithActionAtEnd;
         }
 
-        #endregion
-
-        // Called when the new script is loaded into the Unity editor
+        /// <summary>
+        /// Called when the new script is loaded into the Unity editor.
+        /// </summary>
         protected override void Awake()
         {
             base.Awake();
@@ -58,9 +61,11 @@ namespace UnityGamesToolkit.Runtime
 
         #endregion
 
-        // Defines methods for the new script
         #region Methods
 
+        /// <summary>
+        /// Spawns an audio clip.
+        /// </summary>
         private void SpawnAudio(S_Audio audio)
         {
             if (audio != null)
@@ -69,10 +74,28 @@ namespace UnityGamesToolkit.Runtime
             }
             else
             {
-                Debug.Log("Error: Audio null!!!");
+                Debug.Log("Error: Audio is null!!!");
             }
         }
 
+        /// <summary>
+        /// Spawns an audio clip with an action at the end.
+        /// </summary>
+        public void SpawnAudioWithActionAtEnd(S_Audio audio, Action endAction)
+        {
+            if (audio != null)
+            {
+                clipInExecution.Add(audioPooler.SpawnAudioWithActionAtEnd(audio, endAction));
+            }
+            else
+            {
+                Debug.Log("Error: Audio is null!!!");
+            }
+        }
+
+        /// <summary>
+        /// Destroys an audio clip.
+        /// </summary>
         private void DestroyAudio(S_Audio audio)
         {
             AudioPoolable audioPoolable = GetAudioPoolableFromList(audio);
@@ -84,6 +107,9 @@ namespace UnityGamesToolkit.Runtime
             }
         }
 
+        /// <summary>
+        /// Retrieves an audio clip from the list based on the provided audio object.
+        /// </summary>
         private AudioPoolable GetAudioPoolableFromList(S_Audio audio)
         {
             foreach (AudioPoolable poolable in clipInExecution)
@@ -97,6 +123,9 @@ namespace UnityGamesToolkit.Runtime
             return null;
         }
 
+        /// <summary>
+        /// Changes the volume of audio clips based on the provided audio channel.
+        /// </summary>
         private void ChangeVolume(S_AudioChannel channel)
         {
             foreach (AudioPoolable audio in clipInExecution)
@@ -108,6 +137,9 @@ namespace UnityGamesToolkit.Runtime
             }
         }
 
+        /// <summary>
+        /// Mutes the volume of audio clips based on the provided audio channel.
+        /// </summary>
         private void MuteVolume(S_AudioChannel channel)
         {
             foreach (AudioPoolable audio in clipInExecution)
@@ -119,6 +151,9 @@ namespace UnityGamesToolkit.Runtime
             }
         }
 
+        /// <summary>
+        /// Demutes the volume of audio clips based on the provided audio channel.
+        /// </summary>
         private void DemuteVolume(S_AudioChannel channel)
         {
             foreach (AudioPoolable audio in clipInExecution)
@@ -130,6 +165,9 @@ namespace UnityGamesToolkit.Runtime
             }
         }
 
+        /// <summary>
+        /// Checks if an audio clip is currently being played.
+        /// </summary>
         public bool IsAudioReproducing(S_Audio audio)
         {
             foreach (AudioPoolable m_audio in clipInExecution)
@@ -142,8 +180,7 @@ namespace UnityGamesToolkit.Runtime
 
             return false;
         }
-        
-        #endregion
 
+        #endregion
     }
 }
