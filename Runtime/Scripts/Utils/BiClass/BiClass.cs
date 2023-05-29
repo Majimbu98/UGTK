@@ -8,6 +8,12 @@ namespace UnityGamesToolkit.Runtime
     [System.Serializable]
     public class BiClass<T, T1>
     {
+        public BiClass(T _firstValue, T1 _secondValue)
+        {
+            firstValue = _firstValue;
+            secondValue = _secondValue;
+        }
+
         // The first value of type T.
         [SerializeField] public T firstValue;
 
