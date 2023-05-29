@@ -11,7 +11,7 @@ namespace UnityGamesToolkit.Runtime
     [System.Serializable]
     public class Data : Content<Data>
     {
-        [SerializeField] BiClass<string, float> data; // The key-value pair representing the data.
+        [SerializeField] public BiClass<string, float> data; // The key-value pair representing the data.
         [SerializeField] private float defaultValue; // The default value for the data.
 
         /// <summary>
