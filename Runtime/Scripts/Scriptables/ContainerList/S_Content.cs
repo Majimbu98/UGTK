@@ -8,7 +8,7 @@ namespace UnityGamesToolkit.Runtime
     // Base abstract class for a scriptable container.
     // This class is a generic class and inherits from ScriptableObject.
     // The generic parameter T must be a type that derives from Content<T> and has a parameterless constructor.
-    public abstract class ScriptableContainer<T> : ScriptableObject where T : Content<T>, new()
+    public abstract class S_Content<T> : ScriptableObject where T : Content<T>, new()
     {
         // Summary:
         // The content of the container.

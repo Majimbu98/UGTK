@@ -6,7 +6,7 @@ namespace UnityGamesToolkit.Runtime
 {
     // A serializable class that can hold two values of different types.
     [System.Serializable]
-    public class BiClass<T, T1> where T : new() where T1: new()
+    public class BiClass<T, T1>
     {
         // The first value of type T.
         [SerializeField] public T firstValue;

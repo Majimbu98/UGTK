@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UnityGamesToolkit.Runtime
 {
@@ -13,10 +14,8 @@ namespace UnityGamesToolkit.Runtime
     /// It is used to create custom audio objects in the Unity editor.
     /// </remarks>
     [CreateAssetMenu(menuName = "New Custom Scriptable/Audio/New Audio Cluster")]
-    public class S_AudioCluster : ScriptableObject
+    public class S_AudioCluster : S_Collector<S_Audio>
     {
-        [SerializeField] public List<S_Audio> audioList; // List of S_Audio objects representing the audio cluster.
-
         [HideInInspector]
         public int index = 0; // Current index of the audio cluster.
 
@@ -34,7 +33,7 @@ namespace UnityGamesToolkit.Runtime
         /// <returns>The S_Audio object representing the current song.</returns>
         public S_Audio CurrentSong()
         {
-            return audioList[index];
+            return scriptableList[index];
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace UnityGamesToolkit.Runtime
         /// <returns>True if the current song index is less than the total number of songs, false otherwise.</returns>
         public bool ExistCurrentSong()
         {
-            return index < audioList.Count;
+            return index < scriptableList.Count;
         }
     }
 }
