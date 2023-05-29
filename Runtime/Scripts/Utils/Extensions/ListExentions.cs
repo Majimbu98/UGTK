@@ -7,14 +7,13 @@ using Random = System.Random;
 
 namespace UnityGamesToolkit.Runtime
 {
-
     /// <summary>
     /// Provides extension methods for List objects.
     /// </summary>
     public static class ListExtensions
     {
         private static readonly Random _random = new Random();
-
+        
         #region Methods
 
         #region Generic
@@ -144,11 +143,57 @@ namespace UnityGamesToolkit.Runtime
             return eligibleElements[index];
         }
 
-        #endregion
+        /// <summary>
+        /// Finds the corresponding element of type T1 in the list based on the specified element of type T.
+        /// </summary>
+        /// <typeparam name="T">The type of the first value in the BiClass.</typeparam>
+        /// <typeparam name="T1">The type of the second value in the BiClass.</typeparam>
+        /// <param name="list">The list of BiClass instances.</param>
+        /// <param name="element">The element to find a corresponding value for.</param>
+        /// <returns>The corresponding element of type T1 from the list.</returns>
+        public static T1 FindCorrespondingElementTo<T, T1>(this List<BiClass<T, T1>> list, T element)
+            where T : new() where T1 : new()
+        {
+            T1 elementToFind = new T1();
+
+            foreach (BiClass<T, T1> listElement in list)
+            {
+                if (EqualityComparer<T>.Default.Equals(listElement.firstValue, element))
+                {
+                    elementToFind = listElement.secondValue;
+                }
+            }
+
+            return elementToFind;
+        }
+
+        /// <summary>
+        /// Finds the corresponding element of type T1 in the list based on the specified element of type T.
+        /// </summary>
+        /// <typeparam name="T1">The type of the first value in the BiClass.</typeparam>
+        /// <typeparam name="T">The type of the second value in the BiClass.</typeparam>
+        /// <param name="list">The list of BiClass instances.</param>
+        /// <param name="element">The element to find a corresponding value for.</param>
+        /// <returns>The corresponding element of type T1 from the list.</returns>
+        public static T1 FindCorrespondingElementTo<T1, T>(this List<BiClass<T1, T>> list, T element)
+            where T : new() where T1 : new()
+        {
+            T1 elementToFind = new T1();
+
+            foreach (BiClass<T1, T> listElement in list)
+            {
+                if (EqualityComparer<T>.Default.Equals(listElement.secondValue, element))
+                {
+                    elementToFind = listElement.firstValue;
+                }
+            }
+
+            return elementToFind;
+        }
 
         #endregion
 
-        #region SortingMethods
+        #region Sorting Methods
 
         /// <summary>
         /// Sorts the list using the Insertion Sort algorithm.
@@ -197,8 +242,9 @@ namespace UnityGamesToolkit.Runtime
                     {
                         minIndex = j;
                     }
-                } // Swap the current element with the minimum element
+                }
 
+                // Swap the current element with the minimum element
                 if (minIndex != i)
                 {
                     T temp = list[i];
@@ -313,8 +359,9 @@ namespace UnityGamesToolkit.Runtime
                 }
 
                 mergedIndex++;
-            } // Copy the remaining elements of leftArray[], if any
+            }
 
+            // Copy the remaining elements of leftArray[], if any
             while (leftIndex < size1)
             {
                 list[mergedIndex] = leftArray[leftIndex];
@@ -333,6 +380,8 @@ namespace UnityGamesToolkit.Runtime
 
         #endregion
 
+        #endregion
+        
         #endregion
     }
 }
