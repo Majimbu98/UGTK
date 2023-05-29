@@ -87,7 +87,6 @@ namespace UnityGamesToolkit.Runtime
         public GameObject parentWhenActivated { get; set; }
         public GameObject parentWhenDeactivated { get; set; }
         public float dieTime { get; set; }
-        public Action actionOnSpawn { get; set; }
         public Action actionOnDespawn { get; set; }
 
         #endregion

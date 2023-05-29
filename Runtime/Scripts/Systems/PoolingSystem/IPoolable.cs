@@ -19,7 +19,6 @@ namespace UnityGamesToolkit.Runtime
         public GameObject parentWhenActivated { get; set; }
         public GameObject parentWhenDeactivated { get; set; }
         public float dieTime { get; set; }
-        public Action actionOnSpawn { get; set; }
         public Action actionOnDespawn { get; set; }
         
         #endregion
@@ -72,10 +71,9 @@ namespace UnityGamesToolkit.Runtime
             self.SetActive(true);
             SetTransform();
             AttachToActivatedParent();
-            actionOnSpawn?.Invoke();
             if (dieTime != 0)
             {
-                Timer.DoAfterTime(dieTime, Despawn);
+                TimerSpawner.DoAfterTime(dieTime, Despawn);
             }
         }
 
@@ -100,11 +98,6 @@ namespace UnityGamesToolkit.Runtime
             dieTime = _dieTime;
         }
 
-        public void SetActionOnSpawn(Action _onSpawn)
-        {
-            actionOnSpawn = _onSpawn;
-        }
-        
         public void SetActionOnDespawn(Action _onDespawn)
         {
             actionOnDespawn = _onDespawn;

@@ -8,10 +8,8 @@ namespace UnityGamesToolkit.Runtime
     /// <summary>
     /// Utility class for managing time-related operations in Unity.
     /// </summary>
-    public static class Timer
+    public static class TimerSpawner
     {
-        #region Methods
-
         #region Initialization
 
         /// <summary>
@@ -34,7 +32,7 @@ namespace UnityGamesToolkit.Runtime
         #endregion
 
         #region CallToCourutines
-        
+
         /// <summary>
         /// Executes an action after a specified delay.
         /// </summary>
@@ -67,22 +65,24 @@ namespace UnityGamesToolkit.Runtime
             Coroutine.Instance.StartCoroutine(DoAfterTimeIfBoolChangesCoroutine(time, boolValue, action));
         }
 
-        public static void DuringTimeIfBoolChangesDoElse(float time, bool boolValue, Action firstAction, Action secondAction)
+        public static void DuringTimeIfBoolChangesDoElse(float time, bool boolValue, Action firstAction,
+            Action secondAction)
         {
-            
+            // Implementation not provided in the code
         }
-        
+
         #endregion
-        
+
         #region Courutines
-        
+
         private static System.Collections.IEnumerator DoAfterTimeCoroutine(float time, Action action)
         {
             yield return new WaitForSeconds(time);
             action?.Invoke();
         }
 
-        private static System.Collections.IEnumerator DuringTimeIfBoolChangesDoCoroutine(float time, bool boolValue, Action action)
+        private static System.Collections.IEnumerator DuringTimeIfBoolChangesDoCoroutine(float time, bool boolValue,
+            Action action)
         {
             float timer = 0f;
             bool previousBoolValue = boolValue;
@@ -123,8 +123,23 @@ namespace UnityGamesToolkit.Runtime
                 action?.Invoke();
             }
         }
-        
-        #endregion
+
+        /// <summary>
+        /// Starts a timer with tick updates, executing a specified action at each tick.
+        /// </summary>
+        /// <param name="duration">The duration of the timer in seconds.</param>
+        /// <param name="tickAction">The action to be executed at each tick.</param>
+        private static System.Collections.IEnumerator TimerWithTickCoroutine(float duration, Action tickAction)
+        {
+            float timer = 0f;
+
+            while (timer < duration)
+            {
+                yield return null;
+                tickAction?.Invoke();
+                timer += Time.deltaTime;
+            }
+        }
         
         #endregion
     }
