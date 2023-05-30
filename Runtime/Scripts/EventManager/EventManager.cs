@@ -13,7 +13,9 @@ namespace UnityGamesToolkit.Runtime
     {
         #region Variables & Properties
 
-        #region AudioAction
+        #region AudioEvents
+
+        #region Volumes
 
         /// <summary>
         /// Event action invoked when an audio channel's volume is upgraded.
@@ -29,6 +31,10 @@ namespace UnityGamesToolkit.Runtime
         /// Event action invoked when an audio channel is demuted.
         /// </summary>
         public static Action<S_AudioChannel> OnDemuteChannel;
+
+        #endregion
+
+        #region Play/StopSounds
 
         /// <summary>
         /// Event action invoked when an audio starts playing.
@@ -49,6 +55,8 @@ namespace UnityGamesToolkit.Runtime
         /// Event action invoked when an audio repeats its loop.
         /// </summary>
         public static Action<S_Audio> OnRepeatLoopAudio;
+
+        #region AudioCluster
 
         /// <summary>
         /// Event action invoked when an audio cluster starts playing.
@@ -73,6 +81,26 @@ namespace UnityGamesToolkit.Runtime
         #endregion
 
         #endregion
+
+        #endregion
+
+        #region VibrationEvents
+
+        /// <summary>
+        /// Event action invoked when a vibration is activated.
+        /// </summary>
+        public static Action<S_Vibration> OnActiveVibration;
+
+        /// <summary>
+        /// Event action invoked when a vibration is deactivated.
+        /// </summary>
+        public static Action<S_Vibration> OnDeactiveVibration;
+
+        #endregion
+
+        #endregion
+
+        #region Methods
 
         #region Initialization/Deleting
 
@@ -125,16 +153,19 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Starts playing an audio cluster.
         /// </summary>
+        /// <param name="audioCluster">The audio cluster to play.</param>
         private static void PlayAudioCluster(S_AudioCluster audioCluster)
         {
             audioCluster.ResetIndex();
-            OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(), () => { OnNextAudioCluster?.Invoke(audioCluster); });
+            OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
+                () => { OnNextAudioCluster?.Invoke(audioCluster); });
             reproducingCluster.Add(audioCluster);
         }
 
         /// <summary>
         /// Plays the next song in the audio cluster.
         /// </summary>
+        /// <param name="audioCluster">The audio cluster to play.</param>
         private static void NextAudioCluster(S_AudioCluster audioCluster)
         {
             if (reproducingCluster.Contains(audioCluster))
@@ -164,12 +195,15 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Stops playing an audio cluster.
         /// </summary>
+        /// <param name="audioCluster">The audio cluster to stop.</param>
         private static void StopAudioCluster(S_AudioCluster audioCluster)
         {
             reproducingCluster.Remove(audioCluster);
             OnStopAudio?.Invoke(audioCluster.CurrentSong());
             audioCluster.ResetIndex();
         }
+
+        #endregion
 
         #endregion
     }

@@ -33,7 +33,7 @@ namespace UnityGamesToolkit.Runtime
         /// <returns>The S_Audio object representing the current song.</returns>
         public S_Audio CurrentSong()
         {
-            return scriptableList[index];
+            return list[index];
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace UnityGamesToolkit.Runtime
         /// <returns>True if the current song index is less than the total number of songs, false otherwise.</returns>
         public bool ExistCurrentSong()
         {
-            return index < scriptableList.Count;
+            return index < list.Count;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace UnityGamesToolkit.Runtime
 
         #region Variables & Properties
 
-        [SerializeField] public List<T> scriptableList;
+        [SerializeField] public List<T> list;
 
         #endregion
     }
