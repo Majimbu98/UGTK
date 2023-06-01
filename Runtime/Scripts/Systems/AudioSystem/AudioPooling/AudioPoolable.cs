@@ -13,7 +13,7 @@ namespace UnityGamesToolkit.Runtime
         // Defines variables and properties
         #region Variables & Properties
 
-        private AudioSource audioSource = new AudioSource();
+        private AudioSource audioSource;
         private S_AudioChannel audioChannel = null;
 
         [HideInInspector]

@@ -15,7 +15,7 @@ namespace UnityGamesToolkit.Runtime
 
         [SerializeField] public S_AudioChannel master; // The master audio channel.
         private AudioPooler audioPooler; // The audio pooler component.
-        private List<AudioPoolable> clipInExecution = new List<AudioPoolable>(); // List of currently playing audio clips.
+        private Dictionary<S_Audio, AudioPoolable> clipInExecution = new Dictionary<S_Audio, AudioPoolable>(); // List of currently playing audio clips.
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace UnityGamesToolkit.Runtime
         {
             if (audio != null)
             {
-                clipInExecution.Add(audioPooler.SpawnAudio(audio));
+                clipInExecution.Add(audio, audioPooler.SpawnAudio(audio));
             }
             else
             {
@@ -85,7 +85,7 @@ namespace UnityGamesToolkit.Runtime
         {
             if (audio != null)
             {
-                clipInExecution.Add(audioPooler.SpawnAudioWithActionAtEnd(audio, endAction));
+                clipInExecution.Add(audio, audioPooler.SpawnAudioWithActionAtEnd(audio, endAction));
             }
             else
             {
@@ -98,29 +98,13 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void DestroyAudio(S_Audio audio)
         {
-            AudioPoolable audioPoolable = GetAudioPoolableFromList(audio);
-            if (audioPoolable != null)
+            if(clipInExecution.ContainsKey(audio))
             {
-                clipInExecution.Remove(audioPoolable);
+                AudioPoolable audioPoolable = clipInExecution[audio];
+                clipInExecution.Remove(audio);
                 IPoolable poolable = (IPoolable)audioPoolable;
                 poolable.Despawn();
             }
-        }
-
-        /// <summary>
-        /// Retrieves an audio clip from the list based on the provided audio object.
-        /// </summary>
-        private AudioPoolable GetAudioPoolableFromList(S_Audio audio)
-        {
-            foreach (AudioPoolable poolable in clipInExecution)
-            {
-                if (poolable.s_audio == audio)
-                {
-                    return poolable;
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -128,7 +112,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void ChangeVolume(S_AudioChannel channel)
         {
-            foreach (AudioPoolable audio in clipInExecution)
+            foreach (AudioPoolable audio in clipInExecution.Values)
             {
                 if (audio.s_audio.content.channel == channel)
                 {
@@ -142,7 +126,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void MuteVolume(S_AudioChannel channel)
         {
-            foreach (AudioPoolable audio in clipInExecution)
+            foreach (AudioPoolable audio in clipInExecution.Values)
             {
                 if (audio.s_audio.content.channel == channel)
                 {
@@ -156,7 +140,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void DemuteVolume(S_AudioChannel channel)
         {
-            foreach (AudioPoolable audio in clipInExecution)
+            foreach (AudioPoolable audio in clipInExecution.Values)
             {
                 if (audio.s_audio.content.channel == channel)
                 {
@@ -170,7 +154,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         public bool IsAudioReproducing(S_Audio audio)
         {
-            foreach (AudioPoolable m_audio in clipInExecution)
+            foreach (AudioPoolable m_audio in clipInExecution.Values)
             {
                 if (m_audio.s_audio == audio)
                 {

@@ -2,6 +2,8 @@
 
 using UnityEngine;
 using System;
+
+#if UNITY_EDITOR
 using System.IO;
 using System.Linq;
 
@@ -90,3 +92,5 @@ namespace UnityGamesToolkit.Runtime
         }
     }
 }
+
+#endif

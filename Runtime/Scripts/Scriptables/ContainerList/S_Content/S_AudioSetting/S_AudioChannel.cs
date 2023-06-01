@@ -11,7 +11,7 @@ namespace UnityGamesToolkit.Runtime
     [CreateAssetMenu(menuName = "New Custom Scriptable/Audio/New Audio Channel")]
     public class S_AudioChannel : S_Content<AudioChannel>
     {
-    #if UNITY_EDITOR
+        
         float lastVolume;
         bool lastMute;
 
@@ -33,6 +33,5 @@ namespace UnityGamesToolkit.Runtime
                 content.ChangeMute();
             }
         }
-    #endif
     }
 }
