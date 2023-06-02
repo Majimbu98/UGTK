@@ -13,10 +13,26 @@ namespace UnityGamesToolkit.Runtime
     {
         #region Variables & Properties
 
-        [SerializeField] public S_AudioChannel master; // The master audio channel.
-        private AudioPooler audioPooler; // The audio pooler component.
-        private Dictionary<S_Audio, AudioPoolable> clipInExecution = new Dictionary<S_Audio, AudioPoolable>(); // List of currently playing audio clips.
-
+        /// <summary>
+        /// The master audio channel.
+        /// </summary>
+        [SerializeField] public S_AudioChannel master;
+        
+        /// <summary>
+        /// The audio pooler component.
+        /// </summary>
+        private AudioPooler audioPooler;
+        
+        /// <summary>
+        /// List of currently playing audio clips
+        /// </summary>
+        private Dictionary<S_Audio, AudioPoolable> clipInExecution = new Dictionary<S_Audio, AudioPoolable>();
+        
+        /// <summary>
+        /// List of currently reproducing audio clusters.
+        /// </summary>
+        public static List<S_AudioCluster> reproducingCluster;
+        
         #endregion
 
         #region MonoBehaviour
@@ -68,7 +84,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void SpawnAudio(S_Audio audio)
         {
-            if (audio != null)
+            if (audio != null && !clipInExecution.ContainsKey(audio))
             {
                 clipInExecution.Add(audio, audioPooler.SpawnAudio(audio));
             }
@@ -83,7 +99,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         public void SpawnAudioWithActionAtEnd(S_Audio audio, Action endAction)
         {
-            if (audio != null)
+            if (audio != null && !clipInExecution.ContainsKey(audio))
             {
                 clipInExecution.Add(audio, audioPooler.SpawnAudioWithActionAtEnd(audio, endAction));
             }

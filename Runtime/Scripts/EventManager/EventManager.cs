@@ -73,11 +73,6 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         public static Action<S_AudioCluster> OnStopAudioCluster;
 
-        /// <summary>
-        /// List of currently reproducing audio clusters.
-        /// </summary>
-        public static List<S_AudioCluster> reproducingCluster;
-
         #endregion
 
         #endregion
@@ -123,7 +118,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private static void InitVariables()
         {
-            reproducingCluster = new List<S_AudioCluster>();
+            
         }
 
         /// <summary>
@@ -143,7 +138,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private static void ClearVariables()
         {
-            reproducingCluster.Clear();
+            
         }
 
         #endregion
@@ -159,7 +154,7 @@ namespace UnityGamesToolkit.Runtime
             audioCluster.ResetIndex();
             OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
                 () => { OnNextAudioCluster?.Invoke(audioCluster); });
-            reproducingCluster.Add(audioCluster);
+            AudioSystem.reproducingCluster.Add(audioCluster);
         }
 
         /// <summary>
@@ -168,7 +163,7 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="audioCluster">The audio cluster to play.</param>
         private static void NextAudioCluster(S_AudioCluster audioCluster)
         {
-            if (reproducingCluster.Contains(audioCluster))
+            if (AudioSystem.reproducingCluster.Contains(audioCluster))
             {
                 if (audioCluster.CurrentSong().content.loop)
                 {
@@ -198,7 +193,7 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="audioCluster">The audio cluster to stop.</param>
         private static void StopAudioCluster(S_AudioCluster audioCluster)
         {
-            reproducingCluster.Remove(audioCluster);
+            AudioSystem.reproducingCluster.Remove(audioCluster);
             OnStopAudio?.Invoke(audioCluster.CurrentSong());
             audioCluster.ResetIndex();
         }
