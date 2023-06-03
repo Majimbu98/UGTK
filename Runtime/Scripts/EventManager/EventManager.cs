@@ -106,9 +106,6 @@ namespace UnityGamesToolkit.Runtime
         private static void Init()
         {
             Application.quitting += Shutdown;
-            OnPlayAudioCluster += PlayAudioCluster;
-            OnNextAudioCluster += NextAudioCluster;
-            OnStopAudioCluster += StopAudioCluster;
 
             InitVariables();
         }
@@ -126,9 +123,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private static void Shutdown()
         {
-            OnPlayAudioCluster -= PlayAudioCluster;
-            OnNextAudioCluster -= NextAudioCluster;
-            OnStopAudioCluster -= StopAudioCluster;
+            
 
             ClearVariables();
         }
@@ -142,64 +137,7 @@ namespace UnityGamesToolkit.Runtime
         }
 
         #endregion
-
-        #region AudioClusterMethods
-
-        /// <summary>
-        /// Starts playing an audio cluster.
-        /// </summary>
-        /// <param name="audioCluster">The audio cluster to play.</param>
-        private static void PlayAudioCluster(S_AudioCluster audioCluster)
-        {
-            audioCluster.ResetIndex();
-            OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
-                () => { OnNextAudioCluster?.Invoke(audioCluster); });
-            AudioSystem.Instance.reproducingCluster.Add(audioCluster);
-        }
-
-        /// <summary>
-        /// Plays the next song in the audio cluster.
-        /// </summary>
-        /// <param name="audioCluster">The audio cluster to play.</param>
-        private static void NextAudioCluster(S_AudioCluster audioCluster)
-        {
-            if (AudioSystem.Instance.reproducingCluster.Contains(audioCluster))
-            {
-                if (audioCluster.CurrentSong().content.loop)
-                {
-                    OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
-                        () => { OnNextAudioCluster?.Invoke(audioCluster); });
-                }
-                else
-                {
-                    OnStopAudio?.Invoke(audioCluster.CurrentSong());
-                    audioCluster.IncreaseSongIndex();
-                    if (audioCluster.ExistCurrentSong())
-                    {
-                        OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
-                            () => { OnNextAudioCluster?.Invoke(audioCluster); });
-                    }
-                    else
-                    {
-                        OnStopAudioCluster?.Invoke(audioCluster);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Stops playing an audio cluster.
-        /// </summary>
-        /// <param name="audioCluster">The audio cluster to stop.</param>
-        private static void StopAudioCluster(S_AudioCluster audioCluster)
-        {
-            AudioSystem.Instance.reproducingCluster.Remove(audioCluster);
-            OnStopAudio?.Invoke(audioCluster.CurrentSong());
-            audioCluster.ResetIndex();
-        }
-
-        #endregion
-
+        
         #endregion
     }
 }

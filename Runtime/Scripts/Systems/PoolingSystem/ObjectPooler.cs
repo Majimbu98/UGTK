@@ -9,12 +9,12 @@ namespace UnityGamesToolkit.Runtime
     /// <summary>
     /// Manages a pool of reusable objects.
     /// </summary>
-    public class ObjectPooler : MonoBehaviour
+    public class ObjectPooler<T> : MonoBehaviour where T: MonoBehaviour,IPoolable
     {
         #region Variables & Properties
 
         [Header("Object")]
-        [SerializeField] private ObjectToPool objectPoolableInfo;
+        [SerializeField] private ObjectToPool<T> objectPoolableInfo;
 
         [Header("Quantity of the objects")]
         public int quantity;
@@ -38,6 +38,11 @@ namespace UnityGamesToolkit.Runtime
         #endregion
 
         #region Methods
+
+        private void OnValidate()
+        {
+            objectPoolableInfo.OnObjectPoolableChanged();
+        }
 
         /// <summary>
         /// Initializes the object pool by creating the initial quantity of objects.

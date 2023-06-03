@@ -8,7 +8,7 @@ namespace UnityGamesToolkit.Runtime
     /// <summary>
     /// Manages the pooling of audio objects.
     /// </summary>
-    public class AudioPooler : ObjectPooler
+    public class AudioPooler : ObjectPooler<AudioPoolable>
     {
         /// <summary>
         /// Spawns an audio object from the pool.

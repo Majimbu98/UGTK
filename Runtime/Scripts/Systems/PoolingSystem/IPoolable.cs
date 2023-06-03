@@ -53,7 +53,7 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Initializes the poolable object.
         /// </summary>
-        public void Initialize(GameObject obj, ObjectToPool objectToPool)
+        public void Initialize<T>(GameObject obj, ObjectToPool<T> objectToPool) where T: MonoBehaviour, IPoolable
         {
             self = obj;
             parentWhenActivated = objectToPool.activatedParent;

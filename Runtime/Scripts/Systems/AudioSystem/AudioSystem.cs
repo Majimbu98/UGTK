@@ -51,6 +51,10 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnMuteChannel += MuteVolume;
             EventManager.OnDemuteChannel += DemuteVolume;
             EventManager.OnPlayAudioWithActionAtEnd += SpawnAudioWithActionAtEnd;
+            
+            EventManager.OnPlayAudioCluster += PlayAudioCluster;
+            EventManager.OnNextAudioCluster += NextAudioCluster;
+            EventManager.OnStopAudioCluster += StopAudioCluster;
         }
 
         /// <summary>
@@ -65,6 +69,10 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnMuteChannel -= MuteVolume;
             EventManager.OnDemuteChannel -= DemuteVolume;
             EventManager.OnPlayAudioWithActionAtEnd -= SpawnAudioWithActionAtEnd;
+            
+            EventManager.OnPlayAudioCluster -= PlayAudioCluster;
+            EventManager.OnNextAudioCluster -= NextAudioCluster;
+            EventManager.OnStopAudioCluster -= StopAudioCluster;
         }
 
         /// <summary>
@@ -79,6 +87,8 @@ namespace UnityGamesToolkit.Runtime
         #endregion
 
         #region Methods
+
+        #region Normal Audio
 
         /// <summary>
         /// Spawns an audio clip.
@@ -181,6 +191,66 @@ namespace UnityGamesToolkit.Runtime
 
             return false;
         }
+        
+        #endregion
+        
+        #region ClusterAudio
+        
+        /// <summary>
+        /// Starts playing an audio cluster.
+        /// </summary>
+        /// <param name="audioCluster">The audio cluster to play.</param
+        private void PlayAudioCluster(S_AudioCluster audioCluster)
+        {
+            audioCluster.ResetIndex();
+            EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
+                () => { EventManager.OnNextAudioCluster?.Invoke(audioCluster); });
+            reproducingCluster.Add(audioCluster);
+        }
+        
+        
+        /// <summary>
+        /// Plays the next song in the audio cluster.
+        /// </summary>
+        /// <param name="audioCluster">The audio cluster to play.</param>
+        private void NextAudioCluster(S_AudioCluster audioCluster)
+        {
+            if (reproducingCluster.Contains(audioCluster))
+            {
+                if (audioCluster.CurrentSong().content.loop)
+                {
+                    EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
+                        () => { EventManager.OnNextAudioCluster?.Invoke(audioCluster); });
+                }
+                else
+                {
+                    EventManager.OnStopAudio?.Invoke(audioCluster.CurrentSong());
+                    audioCluster.IncreaseSongIndex();
+                    if (audioCluster.ExistCurrentSong())
+                    {
+                        EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
+                            () => { EventManager.OnNextAudioCluster?.Invoke(audioCluster); });
+                    }
+                    else
+                    {
+                        EventManager.OnStopAudioCluster?.Invoke(audioCluster);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stops playing an audio cluster.
+        /// </summary>
+        /// <param name="audioCluster">The audio cluster to stop.</param>
+        private void StopAudioCluster(S_AudioCluster audioCluster)
+        {
+            reproducingCluster.Remove(audioCluster);
+            EventManager.OnStopAudio?.Invoke(audioCluster.CurrentSong());
+            audioCluster.ResetIndex();
+        }
+        
+        #endregion
 
         #endregion
     }

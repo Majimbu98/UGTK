@@ -8,10 +8,10 @@ namespace UnityGamesToolkit.Runtime
     /// <summary>
     /// Configuration class for objects to be pooled.
     /// </summary>
-    [System.Serializable]
-    public class ObjectToPool
+    [Serializable]
+    public class ObjectToPool<T> where T : MonoBehaviour, IPoolable
     {
-        [Header("The Object to be pooled")]
+        [SerializeField]
         public GameObject objectPoolable;
 
         [Header("The parent objects to attach the poolable object")]
@@ -23,9 +23,18 @@ namespace UnityGamesToolkit.Runtime
 
         [Header("The time after the object deactivates. Set to 0 if not used.")]
         public float dieTime;
-        
-        // Summary:
+
         // Action to be executed by the object after the dieTime has passed.
         private Action actionToDoAfterDieTime;
+        
+        public void OnObjectPoolableChanged()
+        {
+            // Verifica se objectPoolable ha il componente T al suo interno
+            if (objectPoolable.GetComponent<T>() == null)
+            {
+                Debug.Log(("Error! Use a GameObject with " + typeof(T).ToString() + " component attached " ));
+                objectPoolable = null;
+            }
+        }
     }
 }
