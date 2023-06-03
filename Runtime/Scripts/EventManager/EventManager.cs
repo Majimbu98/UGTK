@@ -154,7 +154,7 @@ namespace UnityGamesToolkit.Runtime
             audioCluster.ResetIndex();
             OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
                 () => { OnNextAudioCluster?.Invoke(audioCluster); });
-            AudioSystem.reproducingCluster.Add(audioCluster);
+            AudioSystem.Instance.reproducingCluster.Add(audioCluster);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="audioCluster">The audio cluster to play.</param>
         private static void NextAudioCluster(S_AudioCluster audioCluster)
         {
-            if (AudioSystem.reproducingCluster.Contains(audioCluster))
+            if (AudioSystem.Instance.reproducingCluster.Contains(audioCluster))
             {
                 if (audioCluster.CurrentSong().content.loop)
                 {
@@ -193,7 +193,7 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="audioCluster">The audio cluster to stop.</param>
         private static void StopAudioCluster(S_AudioCluster audioCluster)
         {
-            AudioSystem.reproducingCluster.Remove(audioCluster);
+            AudioSystem.Instance.reproducingCluster.Remove(audioCluster);
             OnStopAudio?.Invoke(audioCluster.CurrentSong());
             audioCluster.ResetIndex();
         }

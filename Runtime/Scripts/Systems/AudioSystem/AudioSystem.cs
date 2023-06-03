@@ -31,7 +31,8 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// List of currently reproducing audio clusters.
         /// </summary>
-        public static List<S_AudioCluster> reproducingCluster;
+        [HideInInspector]
+        public List<S_AudioCluster> reproducingCluster;
         
         #endregion
 
