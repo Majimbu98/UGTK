@@ -15,6 +15,19 @@ namespace UnityGamesToolkit.Runtime
 
         private Dictionary<S_Vibration, bool> vibrationIsPlaying = new Dictionary<S_Vibration, bool>();
 
+        // Property to check if the build target is mobile
+        private bool IsMobileBuild
+        {
+            get
+            {
+#if UNITY_ANDROID || UNITY_IOS
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
         #endregion
 
         #region MonoBehaviour
@@ -27,8 +40,10 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void OnEnable()
         {
+#if UNITY_ANDROID || UNITY_IOS
             EventManager.OnActiveVibration += ActiveVibration;
             EventManager.OnDeactiveVibration += DeactiveVibration;
+#endif
         }
 
         /// <summary>
@@ -37,8 +52,10 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void OnDisable()
         {
+#if UNITY_ANDROID || UNITY_IOS
             EventManager.OnActiveVibration -= ActiveVibration;
             EventManager.OnDeactiveVibration -= DeactiveVibration;
+#endif
         }
 
         #endregion
@@ -53,12 +70,14 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="vibration">The vibration data to activate.</param>
         private void ActiveVibration(S_Vibration vibration)
         {
-            if (!vibrationIsPlaying.ContainsKey(vibration))
+#if UNITY_ANDROID || UNITY_IOS
+            if (!vibrationIsPlaying.ContainsKey(vibration) && IsMobileBuild)
             {
                 bool activation = true;
                 vibrationIsPlaying.Add(vibration, activation);
                 StartCoroutine(VibrationTimeline(vibration, activation));
             }
+#endif
         }
 
         /// <summary>
@@ -67,7 +86,12 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="vibration">The vibration data to deactivate.</param>
         private void DeactiveVibration(S_Vibration vibration)
         {
-            vibrationIsPlaying[vibration] = false;
+#if UNITY_ANDROID || UNITY_IOS
+            if (vibrationIsPlaying.ContainsKey(vibration) && IsMobileBuild)
+            {
+                vibrationIsPlaying[vibration] = false;
+            }
+#endif
         }
 
         /// <summary>
