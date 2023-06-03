@@ -15,19 +15,6 @@ namespace UnityGamesToolkit.Runtime
 
         private Dictionary<S_Vibration, bool> vibrationIsPlaying = new Dictionary<S_Vibration, bool>();
 
-        // Property to check if the build target is mobile
-        private bool IsMobileBuild
-        {
-            get
-            {
-#if UNITY_ANDROID || UNITY_IOS
-                return true;
-#else
-                return false;
-#endif
-            }
-        }
-
         #endregion
 
         #region MonoBehaviour
@@ -40,10 +27,8 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void OnEnable()
         {
-#if UNITY_ANDROID || UNITY_IOS
             EventManager.OnActiveVibration += ActiveVibration;
             EventManager.OnDeactiveVibration += DeactiveVibration;
-#endif
         }
 
         /// <summary>
@@ -52,10 +37,8 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void OnDisable()
         {
-#if UNITY_ANDROID || UNITY_IOS
             EventManager.OnActiveVibration -= ActiveVibration;
             EventManager.OnDeactiveVibration -= DeactiveVibration;
-#endif
         }
 
         #endregion
@@ -71,7 +54,7 @@ namespace UnityGamesToolkit.Runtime
         private void ActiveVibration(S_Vibration vibration)
         {
 #if UNITY_ANDROID || UNITY_IOS
-            if (!vibrationIsPlaying.ContainsKey(vibration) && IsMobileBuild)
+            if (!vibrationIsPlaying.ContainsKey(vibration))
             {
                 bool activation = true;
                 vibrationIsPlaying.Add(vibration, activation);
@@ -86,12 +69,7 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="vibration">The vibration data to deactivate.</param>
         private void DeactiveVibration(S_Vibration vibration)
         {
-#if UNITY_ANDROID || UNITY_IOS
-            if (vibrationIsPlaying.ContainsKey(vibration) && IsMobileBuild)
-            {
-                vibrationIsPlaying[vibration] = false;
-            }
-#endif
+            vibrationIsPlaying[vibration] = false;
         }
 
         /// <summary>
@@ -101,6 +79,7 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="activation">The activation state of the vibration.</param>
         private IEnumerator VibrationTimeline(S_Vibration vibration, bool activation)
         {
+#if UNITY_ANDROID || UNITY_IOS
             int index = 0;
             while (activation && index < vibration.list.Count)
             {
@@ -115,12 +94,15 @@ namespace UnityGamesToolkit.Runtime
                 }
 
                 index++;
+
             }
 
             if (vibrationIsPlaying.ContainsKey(vibration))
             {
                 vibrationIsPlaying.Remove(vibration);
             }
+#endif
+            yield return null;
         }
 
         /// <summary>
@@ -146,6 +128,7 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="activation">The activation state of the vibration.</param>
         private IEnumerator TimerVibration(float time, bool activation)
         {
+#if UNITY_ANDROID || UNITY_IOS
             float elapsedTime = 0f;
 
             Handheld.Vibrate();
@@ -156,6 +139,8 @@ namespace UnityGamesToolkit.Runtime
             }
 
             Handheld.Vibrate();
+#endif
+            yield return null;
         }
 
         #endregion
