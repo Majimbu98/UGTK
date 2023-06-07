@@ -1,9 +1,7 @@
 {
     "name": "UnityGamesToolKit.Editor",
     "rootNamespace": "UnityGamesToolKit.Editor",
-    "references": [
-        "GUID:928e6a668521890478a580fb40ac0119"
-    ],
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],

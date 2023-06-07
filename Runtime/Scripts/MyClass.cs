@@ -15,7 +15,7 @@ public class MyClass : MonoBehaviour
 // Defines variables and properties
 #region Variables & Properties
 
-[DrawIf()]
+//[DrawIf()]
 public string ciao;
 private int hello;
 private OtherClass other;
