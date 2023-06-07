@@ -392,6 +392,45 @@ namespace UnityGamesToolkit.Runtime
             return new string(charList.ToArray());
         }
 
+        /// <summary>
+        /// Converts a List of BiClass<T, T1> objects to a Dictionary<T, T1>.
+        /// </summary>
+        /// <typeparam name="T">The type of the key in the dictionary.</typeparam>
+        /// <typeparam name="T1">The type of the value in the dictionary.</typeparam>
+        /// <param name="biClassList">The List of BiClass<T, T1> objects to convert.</param>
+        /// <returns>A Dictionary<T, T1> containing the converted key-value pairs.</returns>
+        public static Dictionary<T, T1> ToDictionary<T, T1>(this List<BiClass<T, T1>> biClassList)
+        {
+            Dictionary<T, T1> dictionary = new Dictionary<T, T1>();
+
+            foreach (BiClass<T, T1> biClass in biClassList)
+            {
+                dictionary.Add(biClass.firstValue, biClass.secondValue);
+            }
+
+            return dictionary;
+        }
+        
+        /// <summary>
+        /// Converts a Dictionary<T, T1> to a List of BiClass<T, T1> objects.
+        /// </summary>
+        /// <typeparam name="T">The type of the key in the dictionary.</typeparam>
+        /// <typeparam name="T1">The type of the value in the dictionary.</typeparam>
+        /// <param name="dictionary">The Dictionary<T, T1> to convert.</param>
+        /// <returns>A List of BiClass<T, T1> objects containing the key-value pairs from the dictionary.</returns>
+        public static List<BiClass<T, T1>> ToBiClassList<T, T1>(this Dictionary<T, T1> dictionary)
+        {
+            List<BiClass<T, T1>> biClassList = new List<BiClass<T, T1>>();
+
+            foreach (KeyValuePair<T, T1> pair in dictionary)
+            {
+                BiClass<T, T1> biClass = new BiClass<T, T1>(pair.Key, pair.Value);
+                biClassList.Add(biClass);
+            }
+
+            return biClassList;
+        }
+
         #endregion
         
         #endregion

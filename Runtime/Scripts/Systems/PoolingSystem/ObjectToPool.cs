@@ -26,14 +26,20 @@ namespace UnityGamesToolkit.Runtime
 
         // Action to be executed by the object after the dieTime has passed.
         private Action actionToDoAfterDieTime;
-        
+
+        /// <summary>
+        /// Callback method called when the objectPoolable property is changed.
+        /// </summary>
         public void OnObjectPoolableChanged()
         {
-            // Verifica se objectPoolable ha il componente T al suo interno
-            if (objectPoolable.GetComponent<T>() == null)
+            if (objectPoolable != null)
             {
-                Debug.Log(("Error! Use a GameObject with " + typeof(T).ToString() + " component attached " ));
-                objectPoolable = null;
+                // Check if objectPoolable has the T component attached
+                if (objectPoolable.GetComponent<T>() == null)
+                {
+                    Debug.Log(("Error! Use a GameObject with " + typeof(T).ToString() + " component attached."));
+                    objectPoolable = null;
+                }
             }
         }
     }

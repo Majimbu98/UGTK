@@ -25,8 +25,9 @@ namespace UnityGamesToolkit.Runtime
         /// Called when the object is enabled.
         /// Subscribes to necessary events.
         /// </summary>
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             EventManager.OnActiveVibration += ActiveVibration;
             EventManager.OnDeactiveVibration += DeactiveVibration;
         }

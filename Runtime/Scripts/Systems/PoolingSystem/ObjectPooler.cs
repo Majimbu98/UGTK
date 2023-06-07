@@ -41,7 +41,10 @@ namespace UnityGamesToolkit.Runtime
 
         private void OnValidate()
         {
-            objectPoolableInfo.OnObjectPoolableChanged();
+            if (objectPoolableInfo != null)
+            {
+                objectPoolableInfo.OnObjectPoolableChanged();
+            }
         }
 
         /// <summary>
