@@ -101,8 +101,8 @@ namespace UnityGamesToolkit.Runtime
             }
             else
             {
-                Debug.LogError("Error: S_Audio cannot be null!!!");
-                UnityEditor.EditorApplication.isPlaying = false;
+                Debug.LogError("Error: "+ typeof(S_Audio).ToString()+" cannot be null");
+                
             }
         }
 
@@ -117,8 +117,8 @@ namespace UnityGamesToolkit.Runtime
             }
             else
             {
-                Debug.LogError("Error: S_Audio cannot be null!!!");
-                UnityEditor.EditorApplication.isPlaying = false;
+                Debug.LogError("Error: "+ typeof(S_Audio).ToString()+" cannot be null");
+                
             }
         }
 
