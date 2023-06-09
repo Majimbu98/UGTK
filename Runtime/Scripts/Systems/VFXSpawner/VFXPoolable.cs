@@ -29,6 +29,13 @@ namespace UnityGamesToolkit.Runtime
             particleSystem = GetComponent<ParticleSystem>();
         }
 
+        public void PlayParticleSystem()
+        {
+            particleSystem.Stop();
+            particleSystem.Clear();
+            particleSystem.Play();
+        }
+        
         #endregion
 
         

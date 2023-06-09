@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1067852012101052357}
   - component: {fileID: 4326019267509276848}
-  - component: {fileID: 224618537058355447}
-  - component: {fileID: 8932264567045058514}
+  - component: {fileID: -2730682814861206432}
+  - component: {fileID: 6030591409540211467}
   m_Layer: 0
   m_Name: VFXPoolableExample
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2407769202561745075}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3243589, y: 1.0878401, z: 2.4869163}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 0}
---- !u!198 &224618537058355447
+--- !u!198 &-2730682814861206432
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -62,7 +62,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -674,7 +674,7 @@ ParticleSystem:
         m_RotationOrder: 4
   ShapeModule:
     serializedVersion: 6
-    enabled: 0
+    enabled: 1
     type: 4
     angle: 25
     length: 5
@@ -876,7 +876,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -4754,7 +4754,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &8932264567045058514
+--- !u!199 &6030591409540211467
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
