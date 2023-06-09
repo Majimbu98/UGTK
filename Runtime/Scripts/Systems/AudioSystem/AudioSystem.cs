@@ -102,7 +102,7 @@ namespace UnityGamesToolkit.Runtime
             else
             {
                 Debug.LogError("Error: "+ typeof(S_Audio).ToString()+" cannot be null");
-                
+                UnityEditor.EditorApplication.isPlaying = false;
             }
         }
 
@@ -118,7 +118,7 @@ namespace UnityGamesToolkit.Runtime
             else
             {
                 Debug.LogError("Error: "+ typeof(S_Audio).ToString()+" cannot be null");
-                
+                UnityEditor.EditorApplication.isPlaying = false;
             }
         }
 
