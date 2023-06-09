@@ -117,7 +117,8 @@ namespace UnityGamesToolkit.Runtime
             }
             else
             {
-                Debug.Log("Error: Audio is null!!!");
+                Debug.LogError("Error: S_Audio cannot be null!!!");
+                UnityEditor.EditorApplication.isPlaying = false;
             }
         }
 
