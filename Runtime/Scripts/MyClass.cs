@@ -1,33 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class OtherClass
+namespace UnityGamesToolkit.Runtime
 {
-    
-}
+    public class MyClass : MonoBehaviour
+    {
+
+        // Defines variables and properties
+
+        #region Variables & Properties
+
+        [SerializeField] public bool press = true;
+
+        [SerializeField] private int hello;
+
+        [ShowIf("alwaystrue")] public string ciao;
 
 
-public class MyClass : MonoBehaviour
-{
+        #endregion
 
-// Defines variables and properties
-#region Variables & Properties
+        // Defines methods for the new script
 
-[ShowIf()]
-public string ciao;
+        #region Methods
 
-private int hello;
-private OtherClass other;
+        public bool alwaystrue()
+        {
+            return !press;
+        }
 
-#endregion
+        #endregion
 
-// Defines methods for the new script
-#region Methods
-
-
-
-#endregion
-
+    }
 }
