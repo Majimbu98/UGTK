@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
@@ -13,7 +14,8 @@ namespace UnityGamesToolkit.Runtime
 
         [SerializeField] private int hello;
 
-        [ShowIf("alwaystrue")] public string ciao;
+        [ShowIf(nameof(Funct), E_DisablingType.DONTSHOW)]
+        public string ciao;
 
 
         #endregion
@@ -22,9 +24,9 @@ namespace UnityGamesToolkit.Runtime
 
         #region Methods
 
-        public bool alwaystrue()
+        public bool Funct()
         {
-            return !press;
+            return (hello>7);
         }
 
         #endregion
