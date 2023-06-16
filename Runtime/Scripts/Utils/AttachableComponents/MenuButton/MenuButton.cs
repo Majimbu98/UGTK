@@ -15,6 +15,8 @@ public class MenuButton : MonoBehaviour
 
 [SerializeField] private List<GameObject> gameObjectsToDeactivate;
 
+[SerializeField] private List<GameObject> gameObjectsToChangeActivation;
+
 #endregion
 
 // Defines methods for the new script
@@ -35,6 +37,11 @@ public void ChangeObjectInScene()
     foreach (GameObject m_object in gameObjectsToDeactivate)
     {
         m_object.SetActive(false);
+    }
+    
+    foreach (GameObject m_object in gameObjectsToChangeActivation)
+    {
+        m_object.SetActive(!m_object.activeSelf);
     }
 }
 
