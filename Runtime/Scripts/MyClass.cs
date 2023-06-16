@@ -14,7 +14,7 @@ namespace UnityGamesToolkit.Runtime
 
         [SerializeField] private int hello;
 
-        [ShowIf(nameof(Funct), E_DisablingType.DONTSHOW)]
+      //  [ShowIf(nameof(Funct), E_DisablingType.DONTSHOW)]
         public string ciao;
 
 

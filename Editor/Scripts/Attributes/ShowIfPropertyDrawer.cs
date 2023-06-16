@@ -46,13 +46,14 @@ namespace UnityGamesToolkit.Editor
             {
                 Type scriptType = script.GetType();
 
-                MethodInfo method = scriptType.GetMethod(showIf.boolMethod);
+               /* MethodInfo method = scriptType.GetMethod(showIf.boolMethod);
 
                 if (method != null && method.ReturnType == typeof(bool) && method.GetParameters().Length == 0)
                 {
                     bool result = (bool)method.Invoke(script, null);
                     return result;
                 }
+                */
             }
             else
             {

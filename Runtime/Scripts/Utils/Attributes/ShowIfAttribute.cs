@@ -15,16 +15,16 @@ namespace UnityGamesToolkit.Runtime
         public string comparedPropertyName { get; private set; }
         public string comparedValue { get; private set; }
         public E_DisablingType disablingType { get; private set; }
-        public E_ComparisonType comparisonType { get; private set; }
+        //public E_ComparisonType comparisonType { get; private set; }
         #endregion
 
       
-        public ShowIfAttribute(string comparedPropertyName, string comparedValue, E_DisablingType disablingType, E_ComparisonType comparisonType = E_ComparisonType.EQUALS)
+        public ShowIfAttribute(string comparedPropertyName, string comparedValue, E_DisablingType disablingType) //E_ComparisonType comparisonType = E_ComparisonType.EQUALS)
         {
             this.comparedPropertyName = comparedPropertyName;
             this.comparedValue = comparedValue;
             this.disablingType = disablingType;
-            this.comparisonType = comparisonType;
+          //  this.comparisonType = comparisonType;
         }
     }
 }
