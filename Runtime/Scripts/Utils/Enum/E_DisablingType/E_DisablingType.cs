@@ -4,6 +4,6 @@ using UnityEngine;
 
 public enum E_DisablingType
 {
-    READONLY,
-    DONTSHOW
+    ReadOnly,
+    DontDraw
 }

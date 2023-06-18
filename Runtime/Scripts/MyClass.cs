@@ -1,35 +1,19 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityGamesToolkit.Runtime
+public class MyClass : MonoBehaviour
 {
-    public class MyClass : MonoBehaviour
-    {
 
-        // Defines variables and properties
+// Defines variables and properties
+#region Variables & Properties
 
-        #region Variables & Properties
+[SerializeField] public bool boolean1;
 
-        [SerializeField] public bool press = true;
+[SerializeField] public bool boolean2;
 
-        [SerializeField] private int hello;
+[DrawIf("boolean1", false, E_DisablingType.DontDraw)] [SerializeField] public string ciao;
 
-      //  [ShowIf(nameof(Funct), E_DisablingType.DONTSHOW)]
-        public string ciao;
+#endregion
 
-
-        #endregion
-
-        // Defines methods for the new script
-
-        #region Methods
-
-        public bool Funct()
-        {
-            return (hello>7);
-        }
-
-        #endregion
-
-    }
 }
