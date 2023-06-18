@@ -1,15 +1,10 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
-using UnityEngine;
-
 namespace UnityGamesToolkit.Runtime
 {
-    public enum E_TimeType
+    public enum E_ComparisonType
     {
-
-        Vibration,
-        Deelay,
-        
+        Property,
+        Value
     }
-
 }

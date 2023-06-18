@@ -2,9 +2,10 @@
 
 namespace UnityGamesToolkit.Runtime
 {
-    public enum E_DisablingType
+    public enum E_VibrationTimeType
     {
-        ReadOnly,
-        DontDraw
+        Vibration,
+        Deelay,
     }
+
 }
