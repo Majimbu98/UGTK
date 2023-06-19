@@ -11,7 +11,7 @@ namespace UnityGamesToolkit.Runtime
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class DrawIfAttribute : PropertyAttribute
     {
-        #region Fields
+        #region Variables & Properties
 
         public string firstProperty { get; private set; }
         public string secondProperty { get; private set; }
@@ -20,6 +20,9 @@ namespace UnityGamesToolkit.Runtime
         public E_ComparisonType comparisonType { get; private set; }
 
         #endregion
+
+        #region Methods
+        
         /// <summary>
         /// Constructs a DrawIfAttribute to compare two properties.
         /// </summary>
@@ -41,5 +44,7 @@ namespace UnityGamesToolkit.Runtime
             this.disablingType = disablingType;
             this.comparisonType = E_ComparisonType.Value;
         }
+        
+        #endregion
     }
 }

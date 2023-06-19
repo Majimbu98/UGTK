@@ -14,10 +14,9 @@ namespace UnityGamesToolkit.Editor
     [CustomPropertyDrawer(typeof(DrawIfAttribute))]
     public class DrawIfPropertyDrawer : PropertyDrawer
     {
-        #region Fields
+        #region Variables & Properties
 
         private DrawIfAttribute drawIf;
-
         private SerializedProperty compareField_A;
         private SerializedProperty compareField_B;
         private FieldInfo field_A;
@@ -25,6 +24,8 @@ namespace UnityGamesToolkit.Editor
         private bool done_Once = false;
 
         #endregion
+
+        #region Methods
 
         /// <summary>
         /// Gets the height of the property based on the DrawIfAttribute conditions.
@@ -196,5 +197,7 @@ namespace UnityGamesToolkit.Editor
                 }
             }
         }
+        
+        #endregion
     }
 }
