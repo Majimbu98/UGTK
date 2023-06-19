@@ -1,5 +1,6 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
+using System.Dynamic;
 using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
