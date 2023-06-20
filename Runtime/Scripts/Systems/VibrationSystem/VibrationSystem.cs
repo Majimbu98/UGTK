@@ -86,10 +86,10 @@ namespace UnityGamesToolkit.Runtime
             {
                 switch (vibration.list[index].firstValue)
                 {
-                    case E_TimeType.Deelay:
+                    case E_VibrationTimeType.Deelay:
                         yield return TimerDelay(vibration.list[index].secondValue, activation);
                         break;
-                    case E_TimeType.Vibration:
+                    case E_VibrationTimeType.Vibration:
                         yield return TimerVibration(vibration.list[index].secondValue, activation);
                         break;
                 }
