@@ -2,10 +2,12 @@
 
 namespace UnityGamesToolkit.Runtime
 {
-    public enum SplineWalkerMode
+    public enum E_SplineWalkerMode
     {
-        Once,
         Loop,
-        PingPong
+        AllPoints,
+        NextCurvePoint,
+        PreviousCurvePoint,
+        LoopPingPong
     }
 }
