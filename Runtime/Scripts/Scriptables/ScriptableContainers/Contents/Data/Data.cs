@@ -12,7 +12,7 @@ namespace UnityGamesToolkit.Runtime
     {
         [SerializeField] private string nameVariable;
         [SerializeField] public T currentValue; // The key-value pair representing the data.
-        [SerializeField] private T defaultValue; // The default value for the data.
+        [SerializeField] public T defaultValue; // The default value for the data.
         [SerializeField] private bool resetDefaultValue = false;
 
         public override void Init()

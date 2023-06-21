@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
 {
-    public class S_BiClassList<T, T1> : ScriptableObject
+    public class S_BiClass_Collector<T, T1> : ScriptableObject
     {
 
         // Defines variables and properties
