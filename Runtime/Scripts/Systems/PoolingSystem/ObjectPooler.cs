@@ -19,23 +19,14 @@ namespace UnityGamesToolkit.Runtime
         [SerializeField]
         public GameObject objectPoolable;
 
-        [Header("The parent objects to attach the poolable object")]
+        [Header("The parent objects")]
+        [SerializeField]
+        public bool activatedParentChangeable = false;
+        [DrawIf("activatedParentChangeable", false, E_DisablingType.ReadOnly)]
         public GameObject activatedParent;
         public GameObject deactivatedParent;
 
         [Header("Extra Options")]
-        
-        [SerializeField]
-        public bool useHisTransform = true;
-        
-        [DrawIf("useHisTransform", false, E_DisablingType.DontDraw)]
-        public Transform transformObject;
-        
-        [SerializeField]
-        public bool useCustomDieTime = false;
-
-        [DrawIf("useCustomDieTime", true, E_DisablingType.DontDraw)]
-        public float dieTime;
 
         // Action to be executed by the object after the dieTime has passed.
         private Action actionToDoAfterDieTime;
@@ -46,6 +37,25 @@ namespace UnityGamesToolkit.Runtime
         [Header("Whether the quantity list is expandable or not")]
         public bool expandable;
 
+        [Header("Extra Options")]
+        
+        [SerializeField]
+        public bool useHisTransform = true;
+
+        [DrawIf("useHisTransform", false, E_DisablingType.ReadOnly)]
+        public Transform transformObject;
+        
+        [SerializeField]
+        public bool useCustomDieTime = false;
+
+        [DrawIf("useCustomDieTime", true, E_DisablingType.ReadOnly)]
+        public float dieTime;
+        
+        
+        
+        
+        
+        
         private List<IPoolable> objectPoolables = new List<IPoolable>();
 
         #endregion
@@ -73,6 +83,11 @@ namespace UnityGamesToolkit.Runtime
 
         private void Check()
         {
+            if (activatedParentChangeable)
+            {
+                activatedParent = null;
+            }
+
             if (useCustomDieTime == false)
             {
                 dieTime = 0;

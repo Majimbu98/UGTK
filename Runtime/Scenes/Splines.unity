@@ -378,15 +378,31 @@ PrefabInstance:
       value: AudioSystem
       objectReference: {fileID: 0}
     - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+      propertyPath: dieTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
       propertyPath: useDieTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+      propertyPath: activatedParent
+      value: 
+      objectReference: {fileID: 760804758}
     - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
       propertyPath: transformObject
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
       propertyPath: useHisTransform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+      propertyPath: useCustomDieTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+      propertyPath: activatedParentChangeable
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 868562498864340298, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
@@ -447,6 +463,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+--- !u!1 &760804758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 508009324380887844, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+  m_PrefabInstance: {fileID: 760804757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1064507107
 GameObject:
   m_ObjectHideFlags: 0

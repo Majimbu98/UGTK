@@ -63,14 +63,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPoolable: {fileID: 3681477938795714671, guid: 63b67ab87ccac904ca8418a9d5ba999c, type: 3}
+  activatedParentChangeable: 0
   activatedParent: {fileID: 8265097980026776717}
   deactivatedParent: {fileID: 7874190400636815442}
+  quantity: 10
+  expandable: 1
   useHisTransform: 1
   transformObject: {fileID: 2753482502336308622, guid: 63b67ab87ccac904ca8418a9d5ba999c, type: 3}
   useCustomDieTime: 0
   dieTime: 0
-  quantity: 10
-  expandable: 1
 --- !u!1 &7874190400636815442
 GameObject:
   m_ObjectHideFlags: 0
