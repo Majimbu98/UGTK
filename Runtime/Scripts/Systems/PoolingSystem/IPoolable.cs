@@ -64,11 +64,8 @@ namespace UnityGamesToolkit.Runtime
             {
                 SetDieTime(pooler.dieTime);
             }
-
-            if (!pooler.useHisTransform)
-            {
-                SetTransform(pooler.transformObject);
-            }
+            
+            SetTransform(pooler.transformObject);
             
             Despawn();
         }
