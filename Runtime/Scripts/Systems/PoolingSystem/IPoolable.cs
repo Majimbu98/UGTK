@@ -53,13 +53,23 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Initializes the poolable object.
         /// </summary>
-        public void Initialize<T>(GameObject obj, ObjectToPool<T> objectToPool) where T: MonoBehaviour, IPoolable
+        public void Initialize<T>(GameObject obj, ObjectPooler<T> pooler) where T: MonoBehaviour, IPoolable
         {
             self = obj;
-            parentWhenActivated = objectToPool.activatedParent;
-            parentWhenDeactivated = objectToPool.deactivatedParent;
-            dieTime = objectToPool.dieTime;
-            transformObject = objectToPool.transformObject;
+
+            SetActivatedParent(pooler.activatedParent);
+            SetDeactivatedParent(pooler.deactivatedParent);
+
+            if (pooler.useCustomDieTime)
+            {
+                SetDieTime(pooler.dieTime);
+            }
+
+            if (!pooler.useHisTransform)
+            {
+                SetTransform(pooler.transformObject);
+            }
+            
             Despawn();
         }
         
@@ -69,7 +79,7 @@ namespace UnityGamesToolkit.Runtime
         public void Spawn()
         {
             self.SetActive(true);
-            SetTransform();
+            ChangeTransform();
             AttachToActivatedParent();
             if (dieTime != 0)
             {
@@ -91,6 +101,33 @@ namespace UnityGamesToolkit.Runtime
         }
 
         /// <summary>
+        /// Sets the position and rotation of the poolable object.
+        /// </summary>
+        private void ChangeTransform()
+        {
+            self.transform.position= transformObject.position;
+            self.transform.rotation = transformObject.rotation;
+        }
+
+        public void SetActivatedParent(GameObject _parentWhenActivated)
+        {
+            parentWhenActivated = _parentWhenActivated;
+        }
+        
+        public void SetDeactivatedParent(GameObject _deparentWhenActivated)
+        {
+            parentWhenDeactivated = _deparentWhenActivated;
+        }
+        
+        /// <summary>
+        /// Sets the position and rotation of the poolable object.
+        /// </summary>
+        public void SetTransform(Transform _transformObject)
+        {
+            transformObject = _transformObject;
+        }
+
+        /// <summary>
         /// Sets the die time for the poolable object.
         /// </summary>
         public void SetDieTime(float _dieTime)
@@ -102,16 +139,7 @@ namespace UnityGamesToolkit.Runtime
         {
             actionOnDespawn = _onDespawn;
         }
-
-        /// <summary>
-        /// Sets the position and rotation of the poolable object.
-        /// </summary>
-        private void SetTransform()
-        {
-            self.transform.position= transformObject.position;
-            self.transform.rotation = transformObject.rotation;
-        }
-
+        
         #endregion
 
     }

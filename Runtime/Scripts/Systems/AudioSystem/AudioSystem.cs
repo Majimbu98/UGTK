@@ -17,7 +17,7 @@ namespace UnityGamesToolkit.Runtime
         /// The master audio channel.
         /// </summary>
         [SerializeField] public S_AudioChannel master;
-        
+
         /// <summary>
         /// The audio pooler component.
         /// </summary>

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsPersistent: 1
-  master: {fileID: 11400000, guid: c3c24588b74cc674990e0e080569e4d9, type: 2}
+  master: {fileID: 11400000, guid: 92a9dc086cd06a54e8674ab8f2276bdd, type: 2}
   reproducingCluster: []
 --- !u!114 &868562498864340298
 MonoBehaviour:
@@ -62,12 +62,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fa55faa8da9c245a5f181dc5e26b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPoolableInfo:
-    objectPoolable: {fileID: 3681477938795714671, guid: 63b67ab87ccac904ca8418a9d5ba999c, type: 3}
-    activatedParent: {fileID: 8265097980026776717}
-    deactivatedParent: {fileID: 7874190400636815442}
-    transformObject: {fileID: 7061344203545765657}
-    dieTime: 0
+  objectPoolable: {fileID: 3681477938795714671, guid: 63b67ab87ccac904ca8418a9d5ba999c, type: 3}
+  activatedParent: {fileID: 8265097980026776717}
+  deactivatedParent: {fileID: 7874190400636815442}
+  useHisTransform: 1
+  transformObject: {fileID: 2753482502336308622, guid: 63b67ab87ccac904ca8418a9d5ba999c, type: 3}
+  useCustomDieTime: 0
+  dieTime: 0
   quantity: 10
   expandable: 1
 --- !u!1 &7874190400636815442

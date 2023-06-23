@@ -3,18 +3,42 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Serialization;
 
 namespace UnityGamesToolkit.Runtime
 {
     /// <summary>
     /// Manages a pool of reusable objects.
     /// </summary>
-    public class ObjectPooler<T> : MonoBehaviour where T: MonoBehaviour,IPoolable
+    public abstract class ObjectPooler<T> : MonoBehaviour where T: MonoBehaviour,IPoolable
     {
         #region Variables & Properties
 
         [Header("Object")]
-        [SerializeField] private ObjectToPool<T> objectPoolableInfo;
+        [SerializeField]
+        public GameObject objectPoolable;
+
+        [Header("The parent objects to attach the poolable object")]
+        public GameObject activatedParent;
+        public GameObject deactivatedParent;
+
+        [Header("Extra Options")]
+        
+        [SerializeField]
+        public bool useHisTransform = true;
+        
+        [DrawIf("useHisTransform", false, E_DisablingType.DontDraw)]
+        public Transform transformObject;
+        
+        [SerializeField]
+        public bool useCustomDieTime = false;
+
+        [DrawIf("useCustomDieTime", true, E_DisablingType.DontDraw)]
+        public float dieTime;
+
+        // Action to be executed by the object after the dieTime has passed.
+        private Action actionToDoAfterDieTime;
 
         [Header("Quantity of the objects")]
         public int quantity;
@@ -39,14 +63,50 @@ namespace UnityGamesToolkit.Runtime
 
         #region Methods
 
+        #region Editor Methods
+        
         private void OnValidate()
         {
-            if (objectPoolableInfo != null)
+            OnObjectPoolableChanged();
+            Check();
+        }
+
+        private void Check()
+        {
+            if (useCustomDieTime == false)
             {
-                objectPoolableInfo.OnObjectPoolableChanged();
+                dieTime = 0;
+            }
+
+            if (useHisTransform == true && objectPoolable != null)
+            {
+                transformObject = objectPoolable.transform;
+            }
+
+            if (useHisTransform == false)
+            {
+                transformObject = null;
             }
         }
 
+        /// <summary>
+        /// Callback method called when the objectPoolable property is changed.
+        /// </summary>
+        public void OnObjectPoolableChanged()
+        {
+            if (objectPoolable != null)
+            {
+                // Check if objectPoolable has the T component attached
+                if (objectPoolable.GetComponent<T>() == null)
+                {
+                    Debug.Log(("Error! Use a GameObject with " + typeof(T).ToString() + " component attached."));
+                    objectPoolable = null;
+                }
+            }
+        }
+        
+        #endregion
+        
         /// <summary>
         /// Initializes the object pool by creating the initial quantity of objects.
         /// </summary>
@@ -63,12 +123,66 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private IPoolable InitializeSinglePooledObject()
         {
-            GameObject gameObject = Instantiate(objectPoolableInfo.objectPoolable);
+            GameObject gameObject = Instantiate(objectPoolable);
+            
             IPoolable poolable = GetIPoolableFrom(gameObject);
-            poolable.Initialize(gameObject, objectPoolableInfo);
+            
+            poolable.Initialize(gameObject, this);
+            
             return poolable;
         }
 
+        public void SetNewDieTimeForAll(float _dieTime)
+        {
+            dieTime = _dieTime;
+            if (dieTime == 0)
+            {
+                useCustomDieTime = false;
+            }
+
+            foreach (IPoolable poolable in objectPoolables)
+            {
+                poolable.SetDieTime(dieTime);
+            }
+        }
+    
+
+        public void SetNewActiveParentForAll(GameObject _activatedParent)
+        {
+            activatedParent = _activatedParent;
+            foreach (IPoolable poolable in objectPoolables)
+            {
+                poolable.SetActivatedParent(activatedParent);
+            }
+        }
+
+        public void SetNewDeactivatedParentForAll(GameObject _deactivatedParent)
+        {
+            deactivatedParent = _deactivatedParent;
+            foreach (IPoolable poolable in objectPoolables)
+            {
+                poolable.SetActivatedParent(deactivatedParent);
+            }
+        }
+
+        public void SetNewDieTimeForNext(float _dieTime)
+        {
+            IPoolable poolable = GetFirstPooledObject();
+            poolable.SetDieTime(_dieTime);
+        }
+        
+        public void SetNewActiveParentForNext(GameObject _activatedParent)
+        {
+            IPoolable poolable = GetFirstPooledObject();
+            poolable.SetActivatedParent(_activatedParent);
+        }
+
+        public void SetNewDeactivatedParentForNext(GameObject _deactivatedParent)
+        {
+            IPoolable poolable = GetFirstPooledObject();
+            poolable.SetActivatedParent(_deactivatedParent);
+        }
+        
         /// <summary>
         /// Retrieves the IPoolable component from the given GameObject.
         /// </summary>
@@ -106,7 +220,6 @@ namespace UnityGamesToolkit.Runtime
         /// Spawns a poolable object from the pool.
         /// </summary>
         /// <param name="poolable">The IPoolable object to spawn.</param>
-        /// <returns>The spawned GameObject.</returns>
         public GameObject SpawnPoolable(IPoolable poolable)
         {
             poolable.Spawn();
@@ -121,7 +234,7 @@ namespace UnityGamesToolkit.Runtime
         /// <returns>The spawned GameObject.</returns>
         public GameObject SpawnPoolable(IPoolable poolable ,float dieTime)
         {
-            poolable.SetDieTime(dieTime);
+            SetNewDieTimeForNext(dieTime);
             poolable.Spawn();
             return poolable.self;
         }

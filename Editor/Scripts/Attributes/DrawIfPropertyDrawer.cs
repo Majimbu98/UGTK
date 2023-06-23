@@ -165,7 +165,7 @@ namespace UnityGamesToolkit.Editor
 
             if (compareField_A == null)
             {
-                Debug.LogError("Cannot find property with name: " + path);
+                Debug.Log("Cannot find property with name: " + path);
             }
 
             if (property.propertyPath.Contains(".") && property.depth == 0)
