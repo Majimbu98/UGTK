@@ -50,12 +50,7 @@ namespace UnityGamesToolkit.Runtime
 
         [DrawIf("useCustomDieTime", true, E_DisablingType.ReadOnly)]
         public float dieTime;
-        
-        
-        
-        
-        
-        
+
         private List<IPoolable> objectPoolables = new List<IPoolable>();
 
         #endregion
@@ -252,6 +247,18 @@ namespace UnityGamesToolkit.Runtime
             SetNewDieTimeForNext(dieTime);
             poolable.Spawn();
             return poolable.self;
+        }
+
+        public void DespawnPoolable(IPoolable poolable)
+        {
+            if (objectPoolables.Contains(poolable))
+            {
+                poolable.Despawn();
+            }
+            else
+            {
+                Debug.Log("Error: " + this.name + " doesn't contain " + poolable.self.name);
+            }
         }
 
         #endregion

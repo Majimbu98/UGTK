@@ -13,6 +13,7 @@ namespace UnityGamesToolkit.Runtime
         // Defines methods for the new script
         #region Methods
         
+        [Header("VFX Pooler Variables")]
         [SerializeField] private float deelaySpawn;
 
         private bool spawnConsecutively=false;
@@ -20,16 +21,25 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Spawns a visual effects (VFX) object from the pool.
         /// </summary>
-        public void SpawnVFX()
+        public IPoolable SpawnVFX(bool useHisDieTime)
         {
             // Casting the first pooled object to VFXPoolable type
             VFXPoolable poolable = (VFXPoolable)GetFirstPooledObject();
-
-            // Spawning the poolable VFX and setting its duration
-            SpawnPoolable(poolable, poolable.particleSystem.main.duration);
+            
+            if (useHisDieTime)
+            {
+                // Spawning the poolable VFX and setting its duration
+                SpawnPoolable(poolable, poolable.particleSystem.main.duration);
+            }
+            else
+            {
+                SpawnPoolable(poolable);
+            }
             
             //Reproduce poolable VFX
             poolable.PlayParticleSystem();
+
+            return poolable;
         }
 
         public void PlaySpawnVFXConsecutively()
@@ -47,7 +57,7 @@ namespace UnityGamesToolkit.Runtime
         {
             while (spawnConsecutively)
             {
-                SpawnVFX();
+                SpawnVFX(true);
                 yield return new WaitForSeconds(deelaySpawn);
             }
         }
