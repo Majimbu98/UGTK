@@ -1,6 +1,6 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
-namespace UnityGamesToolKit.Runtime
+namespace UnityGamesToolkit.Runtime
 {
     public interface IInspectable
     {

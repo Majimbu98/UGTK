@@ -10,6 +10,9 @@ namespace UnityGamesToolkit.Runtime
     /// </summary>
     public class BezierSpline : MonoBehaviour
     {
+       //TODO HERE SCRIPTABLE FOR MANAGING A SINGLE SPLINE
+       //public 
+        
         /// <summary>
         /// The control points of the spline.
         /// </summary>

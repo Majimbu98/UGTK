@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityGamesToolkit.Runtime;
 
-namespace UnityGamesToolKit.Runtime
+namespace UnityGamesToolkit.Runtime
 {
     [CreateAssetMenu(menuName = "New Custom Scriptable/Data/Primitive Data/New Int")]
     public class S_Data_Int : S_Data<int>

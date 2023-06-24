@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityGamesToolKit.Runtime
+namespace UnityGamesToolkit.Runtime
 {
     public class S_Content_BiClass : MonoBehaviour
     {

@@ -119,6 +119,14 @@ namespace UnityGamesToolkit.Editor
                 spline.AddCurve();
                 EditorUtility.SetDirty(spline);
             }
+
+            if (GUILayout.Button("Reset Spline"))
+            {
+                Undo.RecordObject(spline, "Reset Spline");
+                spline.Reset();
+                EditorUtility.SetDirty(spline);
+            }
+            
         }
 
         private static Color[] modeColors =

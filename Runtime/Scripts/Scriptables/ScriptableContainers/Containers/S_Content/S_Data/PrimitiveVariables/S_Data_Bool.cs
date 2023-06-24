@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityGamesToolkit.Runtime;
 
-namespace UnityGamesToolKit.Runtime
+namespace UnityGamesToolkit.Runtime
 {
     [CreateAssetMenu(menuName = "New Custom Scriptable/Data/Primitive Data/New Bool")]
     public class S_Data_Bool : S_Data<bool>

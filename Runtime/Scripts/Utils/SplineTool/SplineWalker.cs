@@ -3,7 +3,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityGamesToolKit.Runtime;
+using UnityGamesToolkit.Runtime;
 
 namespace UnityGamesToolkit.Runtime
 {
@@ -11,13 +11,39 @@ namespace UnityGamesToolkit.Runtime
     {
         public BezierSpline spline; // Reference to the spline
 
-        [Header("Movement Info")] public SplineTPoints splinePoints;
-        public float duration; // Duration of the movement along the spline
+        [Header("Movement Info")] public S_SplineMovement splinePoints;
         public bool lookForward; // Flag to indicate if the object should look forward
         public E_SplineWalkerMode mode; // Mode of the spline walker
         
+        private float positionLastFrame=0f;
+
+        [Range(0f, 1f)] [SerializeField] private float position;
+
         private bool isMovementEnabled = true; // Flag to indicate if movement is enabled
         private int currentIndex = 0; // Index of the current control point
+
+
+        private void OnValidate()
+        {
+            CheckTValue();
+        }
+
+        private void Update()
+        {
+            CheckTValue();
+        }
+
+        private void CheckTValue()
+        {
+            if (position != positionLastFrame)
+            {
+                transform.position = spline.GetPoint(position);
+            }
+            
+            if(lookForward)
+
+            positionLastFrame = position;
+        }
 
         private void Start()
         {
@@ -26,7 +52,7 @@ namespace UnityGamesToolkit.Runtime
 
         private void MoveToNextPoint()
         {
-            StartCoroutine(MoveToNextPoint(splinePoints));
+            StartCoroutine(Move(splinePoints));
         }
 
         private void MoveToPreviousPoint()
@@ -34,23 +60,25 @@ namespace UnityGamesToolkit.Runtime
             
         }
 
-        private IEnumerator MoveToNextPoint(SplineTPoints _splinePoints)
+        private IEnumerator Move(S_SplineMovement _splinePoints)
         {
-            float myPos = _splinePoints.firstPoint;
-            float end = _splinePoints.secondPoint;
-
-            while (myPos <= end)
+            float myPos = _splinePoints.firstPoint.value;
+            float endPos = _splinePoints.secondPoint.value;
+            float duration = _splinePoints.duration;
+            float elapsedTime = 0f;
+            
+            while (elapsedTime<duration)
             {
-                myPos += Time.deltaTime / duration;
-
-                float t = myPos / end;
-
-                transform.position = spline.GetPoint(Mathf.Lerp(_splinePoints.firstPoint, end, t));
+                float currentValue = Mathf.Lerp(myPos, endPos, elapsedTime / duration);
                 
+                elapsedTime += Time.deltaTime;
+
+                position = currentValue;
+
                 yield return null;
             }
 
-            transform.position = spline.GetPoint(end);
+            position = endPos;
         }
         
         
@@ -84,14 +112,6 @@ namespace UnityGamesToolkit.Runtime
 
             while (progress >= 0f && progress <= 1f)
             {
-                // Update the progress based on the direction and time
-                float deltaTime = Time.deltaTime;
-                if (!goingForward)
-                {
-                    deltaTime = -deltaTime;
-                }
-                progress += deltaTime / duration;
-
                 // Check if the progress has reached the end of the spline
                 if (progress > 1f)
                 {

@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityGamesToolkit.Runtime;
 
-namespace UnityGamesToolKit.Runtime
+namespace UnityGamesToolkit.Runtime
 {
     public class S_Data<T>: S_Content<Data<T>>, IInspectable
     {
