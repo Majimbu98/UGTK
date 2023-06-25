@@ -91,7 +91,6 @@ namespace UnityGamesToolkit.Editor
         {
             if (compareField_A == null)
             {
-                Debug.Log("Value NULL");
                 return true;
             }
 
@@ -120,12 +119,10 @@ namespace UnityGamesToolkit.Editor
 
             if (valuesMatch)
             {
-                Debug.Log("Same value");
                 return true;
             }
             else
             {
-                Debug.Log("Different value");
                 return false;
             }
         }
@@ -177,7 +174,6 @@ namespace UnityGamesToolkit.Editor
 
             if (compareField_B == null)
             {
-                Debug.Log("Cannot find property with name: " + path);
                 return;
             }
 
