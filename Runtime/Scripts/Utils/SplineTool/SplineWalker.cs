@@ -19,25 +19,26 @@ namespace UnityGamesToolkit.Runtime
         public bool lookForward;
         private float positionLastFrame=0f;
         private bool isMovementEnabled = true;
-        private int currentIndex = 0;
         [HideInInspector]
         public bool myBoolean = false;
-        [HideInInspector] public int index = 0;
+        [HideInInspector] public int index = -1;
 
         [DrawIf("myBoolean", true, E_DisablingType.ReadOnly)]
-        public bool moving;
-        
+        public bool moving=false;
+
         private void OnValidate()
         {
             CheckTValue();
         }
         
+        private void Awake()
+        {
+            index = -1;
+        }
+        
         private void Start()
         {
-            if (index != splinePoints.Count)
-            {
-                StartCoroutine(MoveOnCurrentMovement());
-            }
+            
         }
         
         private void Update()
@@ -50,11 +51,6 @@ namespace UnityGamesToolkit.Runtime
             if (position != positionLastFrame)
             {
                 transform.position = spline.GetPoint(position);
-                moving = true;
-            }
-            else
-            {
-                moving = false;
             }
             
             if (lookForward)
@@ -76,7 +72,7 @@ namespace UnityGamesToolkit.Runtime
             {
                 splinePoints.Add(new SplineMovement(0, 1, 10));
                 currentMovement = splinePoints[0];
-                index = 0;
+                index = -1;
             }
 
             positionLastFrame = position;
@@ -86,6 +82,26 @@ namespace UnityGamesToolkit.Runtime
             
         }
 
+        public bool OthersPoints()
+        {
+            return (currentMovement != splinePoints.Last());
+        }
+        
+        public void MoveOnCurrent()
+        {
+            StartCoroutine(MoveOnCurrentMovement());
+        }
+        
+        public void MoveOnNext()
+        {
+            StartCoroutine(MoveOnNextMovement());
+        }
+        
+        public void MoveOnPrevious()
+        {
+            StartCoroutine(MoveOnPreviousMovement());
+        }
+        
         private IEnumerator MoveOnNextMovement()
         {
             index++;
@@ -105,6 +121,10 @@ namespace UnityGamesToolkit.Runtime
 
         private IEnumerator Move(SplineMovement _splinePoints)
         {
+            moving = true;
+            
+            currentMovement = _splinePoints;
+            
             float myPos = _splinePoints.firstPoint;
             float endPos = _splinePoints.secondPoint;
             float duration = _splinePoints.duration;
@@ -122,6 +142,8 @@ namespace UnityGamesToolkit.Runtime
             }
 
             position = endPos;
+
+            moving = false;
         }
     }
 }
