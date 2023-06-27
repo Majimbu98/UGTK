@@ -17,11 +17,11 @@ namespace UnityGamesToolkit.Editor
 
             EditorGUILayout.Space();
 
-            ((IInspectable)target).IOnInspectorGUI();
-
-
+            ((IInspectable)target).IOnInspectorGUIButton();
+            
         }
     }
 
 #endif
+    
 }

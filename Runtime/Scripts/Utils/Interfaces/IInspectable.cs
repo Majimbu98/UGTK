@@ -4,6 +4,7 @@ namespace UnityGamesToolkit.Runtime
 {
     public interface IInspectable
     {
-        public void IOnInspectorGUI();
+        public void IOnInspectorGUIButton();
+        public void IOnInspectorGUIVariable();
     }
 }

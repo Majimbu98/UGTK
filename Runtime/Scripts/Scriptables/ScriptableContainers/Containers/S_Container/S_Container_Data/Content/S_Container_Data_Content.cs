@@ -6,10 +6,10 @@ namespace UnityGamesToolkit.Runtime
 {
     public abstract class S_Container_Data_Content<T> : S_Container_Data<T> where T : Content<T>
     {
-        public override void IOnInspectorGUI()
+        public override void IOnInspectorGUIButton()
         {
 #if UNITY_EDITOR
-            base.IOnInspectorGUI();
+            base.IOnInspectorGUIButton();
             if (GUILayout.Button("Clone Default into Current"))
             {
                 CloneDefaultIntoCurrent();
