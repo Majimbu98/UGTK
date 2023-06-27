@@ -10,11 +10,12 @@ namespace UnityGamesToolkit.Runtime
 {
     public enum E_VerifyCollision
     {
-        ByObjectComponents,
-        ByTag,
+        ObjectComponents,
+        DirectObject,
+        Tag,
         EveryObject
     }
-    
+
     public class ColliderDetector : MonoBehaviour
     {
         // Defines variables and properties
@@ -53,7 +54,7 @@ namespace UnityGamesToolkit.Runtime
 
         private void UpgradeGameObjectReference()
         {
-            if (typeCollision != E_VerifyCollision.ByObjectComponents)
+            if (typeCollision != E_VerifyCollision.ObjectComponents && typeCollision !=E_VerifyCollision.DirectObject)
             {
                 gameObjectReference = null;
             }
@@ -75,7 +76,7 @@ namespace UnityGamesToolkit.Runtime
         
         private void UpgradeTag()
         {
-            if (typeCollision != E_VerifyCollision.ByTag)
+            if (typeCollision != E_VerifyCollision.Tag)
             {
                 tag = "";
             }
@@ -111,12 +112,12 @@ namespace UnityGamesToolkit.Runtime
             
             switch (typeCollision)
             {
-                case E_VerifyCollision.ByObjectComponents:
+                case E_VerifyCollision.ObjectComponents:
 
                     return (ComponentUtility.CompareComponentLists(gameObjectReference, otherObject));
                         
                     break;
-                case E_VerifyCollision.ByTag:
+                case E_VerifyCollision.Tag:
 
                     return gameObject.tag == otherObject.tag;
 

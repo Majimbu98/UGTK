@@ -475,6 +475,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 508009324380887844, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
   m_PrefabInstance: {fileID: 760804757}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &760804759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8044378850314763714, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+  m_PrefabInstance: {fileID: 760804757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &760804760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8265097980026776717, guid: e84fb4f031b17924180fd9ff36cce823, type: 3}
+  m_PrefabInstance: {fileID: 760804757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &836673801
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +682,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: ColliderDetectorExample
       objectReference: {fileID: 0}
+    - target: {fileID: 3245012258155358909, guid: 28a56523f0360b34da595d48da5b0b93, type: 3}
+      propertyPath: tag
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245012258155358909, guid: 28a56523f0360b34da595d48da5b0b93, type: 3}
+      propertyPath: typeCollision
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245012258155358909, guid: 28a56523f0360b34da595d48da5b0b93, type: 3}
+      propertyPath: gameObjectReference
+      value: 
+      objectReference: {fileID: 760804760}
+    - target: {fileID: 3245012258155358909, guid: 28a56523f0360b34da595d48da5b0b93, type: 3}
+      propertyPath: gameObjectReferenceLastFrame
+      value: 
+      objectReference: {fileID: 760804760}
+    - target: {fileID: 3245012258155358909, guid: 28a56523f0360b34da595d48da5b0b93, type: 3}
+      propertyPath: componentList.list.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245012258155358909, guid: 28a56523f0360b34da595d48da5b0b93, type: 3}
+      propertyPath: componentList.list.Array.data[0]
+      value: 
+      objectReference: {fileID: 760804759}
     - target: {fileID: 7149605118896526115, guid: 28a56523f0360b34da595d48da5b0b93, type: 3}
       propertyPath: m_RootOrder
       value: 6
