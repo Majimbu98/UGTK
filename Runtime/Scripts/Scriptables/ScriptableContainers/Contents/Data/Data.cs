@@ -8,7 +8,7 @@ namespace UnityGamesToolkit.Runtime
     /// Represents data with a key-value pair and provides methods for manipulating and comparing the data.
     /// </summary>
     [System.Serializable]
-    public abstract class Data<T> : Content<Data<T>>
+    public class Data<T> : Content<Data<T>>
     {
         [SerializeField] private string nameVariable;
         [SerializeField] public T currentValue; // The key-value pair representing the data.
