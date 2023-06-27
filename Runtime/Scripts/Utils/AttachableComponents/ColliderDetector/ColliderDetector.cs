@@ -1,21 +1,11 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace UnityGamesToolkit.Runtime
 {
-    public enum E_VerifyCollision
-    {
-        ObjectComponents,
-        DirectObject,
-        Tag,
-        EveryObject
-    }
-
     public class ColliderDetector : MonoBehaviour
     {
         // Defines variables and properties
