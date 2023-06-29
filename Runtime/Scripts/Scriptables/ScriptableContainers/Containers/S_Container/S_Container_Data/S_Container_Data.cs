@@ -4,7 +4,9 @@
 using UnityEditor;
 #endif
 
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityGamesToolkit.Runtime
 {

@@ -64,6 +64,19 @@ namespace UnityGamesToolkit.Runtime
         }
 
         /// <summary>
+        /// Prints the non-null elements of the list to the console.
+        /// </summary>
+        /// <typeparam name="T">The type of objects in the list.</typeparam>
+        /// <param name="list">The list of objects.</param>
+        public static void PrintOnConsole<T>(this List<T> list, Color color)
+        {
+            foreach (var item in list)
+            {
+                ConsoleUtility.LogColored(item.ToString(), color);
+            }
+        }
+        
+        /// <summary>
         /// Converts the list to a queue.
         /// </summary>
         /// <typeparam name="T">The type of objects in the list.</typeparam>
@@ -74,6 +87,19 @@ namespace UnityGamesToolkit.Runtime
             return new Queue<T>(list);
         }
 
+        public static List<T> RemoveNullValues<T>(List<T> list)
+        {
+            List<T> filteredList = new List<T>();
+            foreach (T item in list)
+            {
+                if (item != null)
+                {
+                    filteredList.Add(item);
+                }
+            }
+            return filteredList;
+        }
+        
         #region Random Elements
 
         /// <summary>

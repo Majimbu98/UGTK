@@ -1,5 +1,6 @@
 // © 2023 Marcello De Bonis. All rights reserved.
 
+using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 namespace UnityGamesToolkit.Runtime
@@ -9,7 +10,7 @@ namespace UnityGamesToolkit.Runtime
     // This class is a generic class and implements the IClonable<T> interface.
     // The generic parameter T must be a type that derives from Content<T> and has a parameterless constructor.
     [System.Serializable]
-    public abstract class Content<T> : IClonable<T> where T : Content<T>
+    public class Content<T> : IClonable<T> where T : Content<T>
     {
         // Summary:
         // Creates a clone of the content object.
@@ -20,6 +21,5 @@ namespace UnityGamesToolkit.Runtime
         }
 
         public virtual void Init(){}
-
     }
 }

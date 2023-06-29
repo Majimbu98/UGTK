@@ -8,22 +8,24 @@ namespace UnityGamesToolkit.Runtime
     /// Represents data with a key-value pair and provides methods for manipulating and comparing the data.
     /// </summary>
     [System.Serializable]
-    public class Data<T> : Content<Data<T>>
+    public class Data<T> : Content<Data<T>>, IExecutableOnPlay
     {
         [SerializeField] private string nameVariable;
         [SerializeField] public T currentValue; // The key-value pair representing the data.
         [SerializeField] public T defaultValue; // The default value for the data.
-        [SerializeField] private bool resetDefaultValueOnPlayMode = false;
-
+        [SerializeField] public bool resetValueOnPlay = false;
+        
         public override void Init()
         {
-            if (Application.isPlaying)
-            {
-                if (resetDefaultValueOnPlayMode)
-                {
-                    SetToDefaultValue();
-                }
+            if (resetValueOnPlay) 
+            { 
+                SetToDefaultValue();
             }
+        }
+
+        public Data()
+        {
+            //add
         }
 
         /// <summary>
@@ -32,6 +34,11 @@ namespace UnityGamesToolkit.Runtime
         public void SetToDefaultValue()
         {
             currentValue = defaultValue;
+        }
+        
+        public void OnPlay()
+        {
+            Init();
         }
     }
 }
