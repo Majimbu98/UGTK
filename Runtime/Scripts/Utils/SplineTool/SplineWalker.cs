@@ -77,9 +77,10 @@ namespace UnityGamesToolkit.Runtime
 
             positionLastFrame = position;
 
+#if UNITY_EDITOR
             UnityEditor.EditorWindow view = UnityEditor.EditorWindow.GetWindow(typeof(UnityEditor.EditorWindow));
             view.Repaint();
-            
+#endif
         }
 
         public bool OthersPoints()
