@@ -78,6 +78,7 @@ namespace UnityGamesToolkit.Runtime
             self.SetActive(true);
             ChangeTransform();
             AttachToActivatedParent();
+            self.transform.localPosition = new Vector3(0,0,0);
             if (dieTime != 0)
             {
                 TimerSpawner.DoAfterTime(dieTime, Despawn);

@@ -102,14 +102,14 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// Callback method called when the objectPoolable property is changed.
         /// </summary>
-        public void OnObjectPoolableChanged()
+        private void OnObjectPoolableChanged()
         {
             if (objectPoolable != null)
             {
                 // Check if objectPoolable has the T component attached
                 if (objectPoolable.GetComponent<T>() == null)
                 {
-                    Debug.Log(("Error! Use a GameObject with " + typeof(T).ToString() + " component attached."));
+                    ConsoleUtility.LogColored("Error! Use a GameObject with " + typeof(T).ToString() + " component attached.", Color.blue);
                     objectPoolable = null;
                 }
             }
@@ -159,10 +159,17 @@ namespace UnityGamesToolkit.Runtime
 
         public void SetNewActiveParentForAll(GameObject _activatedParent)
         {
-            activatedParent = _activatedParent;
-            foreach (IPoolable poolable in objectPoolables)
+            if (activatedParentChangeable)
             {
-                poolable.SetActivatedParent(activatedParent);
+                activatedParent = _activatedParent;
+                foreach (IPoolable poolable in objectPoolables)
+                {
+                    poolable.SetActivatedParent(activatedParent);
+                }
+            }
+            else
+            {
+                ConsoleUtility.LogColored("Error: " + this.gameObject.name + "'s " + this.name + " parent changeable variable is setted to false", Color.blue);
             }
         }
 
