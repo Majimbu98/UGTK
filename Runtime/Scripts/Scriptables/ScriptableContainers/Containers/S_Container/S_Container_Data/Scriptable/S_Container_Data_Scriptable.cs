@@ -9,9 +9,33 @@ using UnityGamesToolkit.Runtime;
 
 namespace UnityGamesToolkit.Runtime
 {
-    public abstract class S_Container_Data_Scriptable<T, T1> : S_Container_Data_Content<T1> where T: S_Container<T1> where T1: Content<T1>
+    public abstract class S_Container_Data_Scriptable<T, T1> : S_Container_Data<T> where T: S_Container<T1> where T1: Content<T1>, new()
     {
+        public override void IOnInspectorGUIButton()
+        {
+#if UNITY_EDITOR
+            
+            if (GUILayout.Button("Clone Default into Current"))
+            {
+                CloneDefaultIntoCurrent();
+            }
+            
+            if (GUILayout.Button("Clone Current into Default"))
+            {
+                CloneCurrentIntoDefault();
+            }
+#endif
+        }
+
+        public void CloneDefaultIntoCurrent()
+        {
+            content.currentValue.content = content.defaultValue.content.Clone();
+        }
         
+        public void CloneCurrentIntoDefault()
+        {
+            content.defaultValue.content = content.currentValue.content.Clone();
+        }
     }
 }
 

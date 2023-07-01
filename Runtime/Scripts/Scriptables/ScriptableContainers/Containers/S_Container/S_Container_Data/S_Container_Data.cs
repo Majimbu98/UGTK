@@ -18,19 +18,24 @@ namespace UnityGamesToolkit.Runtime
 #if UNITY_EDITOR
             if (GUILayout.Button("Reset Default Variable"))
             { 
-                content.SetToDefaultValue();
+                content.CloneCurrentIntoDefault();
+                UnityEditor.EditorWindow view = UnityEditor.EditorWindow.GetWindow(typeof(UnityEditor.EditorWindow));
+                view.Repaint();
+            }
+            
+            if (GUILayout.Button("Default becomes CurrentVariable"))
+            { 
+                content.CloneDefaultIntoCurrent();
                 UnityEditor.EditorWindow view = UnityEditor.EditorWindow.GetWindow(typeof(UnityEditor.EditorWindow));
                 view.Repaint();
             }
 #endif
         }
 
-        public void IOnInspectorGUIVariable()
+        public virtual void IOnInspectorGUIVariable()
         {
             
         }
-
-        public virtual void CloneDefaultIntoCurrent() { }
     }
 }
 
