@@ -32,6 +32,7 @@ namespace UnityGamesToolkit.Runtime
         public void SetVolumeToAudioChannel()
         {
             audioChannel.content.volume = slider.value;
+            EventManager.OnUpgradeVolume?.Invoke(audioChannel);
         }
     }
 }

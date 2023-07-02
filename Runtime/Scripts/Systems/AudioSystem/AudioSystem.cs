@@ -143,9 +143,10 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void ChangeVolume(S_AudioChannel channel)
         {
+            
             foreach (AudioPoolable audio in clipInExecution.Values)
             {
-                if (audio.s_audio.content.channel == channel)
+                if (audio.s_audio.content.channel == channel || master == channel)
                 {
                     audio.ChangeVolume();
                 }
