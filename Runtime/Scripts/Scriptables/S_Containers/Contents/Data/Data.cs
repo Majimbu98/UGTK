@@ -10,7 +10,7 @@ namespace UnityGamesToolkit.Runtime
     [System.Serializable]
     public class Data<T> : Content<Data<T>>
     {
-        [SerializeField] private string nameVariable;
+        [SerializeField] public string nameVariable;
         [SerializeField] public T currentValue; // The key-value pair representing the data.
         [SerializeField] public T defaultValue; // The default value for the data.
         [SerializeField] public bool resetValueEvent = false;
