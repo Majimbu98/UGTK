@@ -32,6 +32,14 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         public static Action<S_AudioChannel> OnDemuteChannel;
 
+        public static Action<S_Audio> OnMuteAudio;
+
+        public static Action<S_Audio> OnDeMuteAudio;
+
+        public static Action<S_AudioCluster> OnMuteCluster;
+        
+        public static Action<S_AudioCluster> OnDeMuteCluster;
+
         #endregion
 
         #region Play/StopSounds
@@ -79,6 +87,14 @@ namespace UnityGamesToolkit.Runtime
 
         #endregion
 
+        #region Mobile
+
+        #region Notification
+        //Title, Messagge, deelay from when it could arrives
+        public static Action<string, string, float> OnNotifyAppear;
+
+        #endregion
+        
         #region VibrationEvents
 
         /// <summary>
@@ -94,6 +110,8 @@ namespace UnityGamesToolkit.Runtime
         #endregion
 
         #endregion
+        
+        #endregion
 
         #region Methods
 
@@ -106,7 +124,6 @@ namespace UnityGamesToolkit.Runtime
         private static void Init()
         {
             Application.quitting += Shutdown;
-
             InitVariables();
         }
 
@@ -123,8 +140,6 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private static void Shutdown()
         {
-            
-
             ClearVariables();
         }
 

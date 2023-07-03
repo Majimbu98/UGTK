@@ -254,6 +254,54 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnStopAudio?.Invoke(audioCluster.CurrentSong());
             audioCluster.ResetIndex();
         }
+
+        private void MuteAudio(S_Audio _audio)
+        {
+            if (clipInExecution.ContainsKey(_audio))
+            {
+                clipInExecution[_audio].Mute();
+            }
+            else
+            {
+                ConsoleUtility.LogColored("Error, the ScriptableAudio doesn't exists", Color.blue);
+            }
+        }
+        
+        private void DeMuteAudio(S_Audio _audio)
+        {
+            if (clipInExecution.ContainsKey(_audio))
+            {
+                clipInExecution[_audio].Demute();
+            }
+            else
+            {
+                ConsoleUtility.LogColored("Error, the ScriptableAudio doesn't exists", Color.blue);
+            }
+        }
+        
+        private void MuteAudioCluster(S_AudioCluster cluster)
+        {
+            if (reproducingCluster.Contains(cluster))
+            {
+                MuteAudio(cluster.CurrentSong());
+            }
+            else
+            {
+                ConsoleUtility.LogColored("Error, the ScriptableAudio doesn't exists", Color.blue);
+            }
+        }
+        
+        private void DeMuteAudioCluster(S_AudioCluster cluster)
+        {
+            if (reproducingCluster.Contains(cluster))
+            {
+                DeMuteAudio(cluster.CurrentSong());
+            }
+            else
+            {
+                ConsoleUtility.LogColored("Error, the ScriptableAudio doesn't exists", Color.blue);
+            }
+        }
         
         #endregion
 
