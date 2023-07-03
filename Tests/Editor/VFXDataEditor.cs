@@ -1,6 +1,6 @@
 using UnityEditor;
 using UnityEngine;
-
+/*
 [CustomEditor(typeof(VFXData))]
 public class VFXDataEditor : Editor
 {
@@ -25,3 +25,4 @@ public class VFXDataEditor : Editor
         }
     }
 }
+*/
