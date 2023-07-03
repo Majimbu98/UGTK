@@ -24,7 +24,7 @@ namespace UnityGamesToolkit.Runtime
         // Called when the object is disabled
         void OnDisable()
         {
-            // Empty
+            audioChannel.content.volume = slider.value;
         }
 
         // Methods
