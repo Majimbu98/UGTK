@@ -21,12 +21,12 @@ namespace UnityGamesToolkit.Runtime
         /// <summary>
         /// The audio pooler component.
         /// </summary>
-        private AudioPooler audioPooler;
+        public AudioPooler audioPooler;
         
         /// <summary>
         /// List of currently playing audio clips
         /// </summary>
-        private Dictionary<S_Audio, AudioPoolable> clipInExecution = new Dictionary<S_Audio, AudioPoolable>();
+        public Dictionary<S_Audio, AudioPoolable> clipInExecution = new Dictionary<S_Audio, AudioPoolable>();
         
         /// <summary>
         /// List of currently reproducing audio clusters.
