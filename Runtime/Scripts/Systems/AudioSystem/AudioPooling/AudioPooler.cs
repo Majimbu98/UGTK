@@ -64,6 +64,8 @@ namespace UnityGamesToolkit.Runtime
         {
             if (audio.content.loop)
             {
+                EventManager.OnStopAudio?.Invoke(audio);
+                
                 // Invoke the event for repeating loop audio
                 EventManager.OnRepeatLoopAudio?.Invoke(audio);
             }

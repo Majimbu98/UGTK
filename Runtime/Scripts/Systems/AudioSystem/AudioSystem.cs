@@ -101,8 +101,13 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private void SpawnAudio(S_Audio audio)
         {
-            if (audio != null && !clipInExecution.ContainsKey(audio))
+            if (audio != null)
             {
+                if (clipInExecution.ContainsKey(audio))
+                {
+                    clipInExecution.Remove(audio);
+                }
+                
                 clipInExecution.Add(audio, audioPooler.SpawnAudio(audio));
             }
             else
@@ -118,7 +123,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         public void SpawnAudioWithActionAtEnd(S_Audio audio, Action endAction)
         {
-            if (audio != null && !clipInExecution.ContainsKey(audio))
+            if (audio != null)
             {
                 clipInExecution.Add(audio, audioPooler.SpawnAudioWithActionAtEnd(audio, endAction));
             }
@@ -228,14 +233,17 @@ namespace UnityGamesToolkit.Runtime
         {
             if (reproducingCluster.Contains(audioCluster))
             {
+                S_Audio audio = audioCluster.CurrentSong();
+                
+                Debug.Log(audio.name);
+                
                 if (audioCluster.CurrentSong().content.loop)
                 {
-                    S_Audio audio = audioCluster.CurrentSong();
-                    EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audio, () => { NextAudioCluster(audioCluster); });
+                    EventManager.OnRepeatLoopAudio?.Invoke(audio);
                 }
                 else
                 {
-                    S_Audio audio = audioCluster.CurrentSong();
+                    audio = audioCluster.CurrentSong();
                     EventManager.OnStopAudio?.Invoke(audio);
                     audioCluster.IncreaseSongIndex();
                     if (audioCluster.ExistCurrentSong())
