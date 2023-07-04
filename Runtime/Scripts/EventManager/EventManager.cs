@@ -116,6 +116,12 @@ namespace UnityGamesToolkit.Runtime
         public static Action<S_Language> OnSetNewLanguage;
 
         #endregion
+
+        #region External Events
+
+        public static Action<string> OnOpenLink;
+
+        #endregion
         
         #endregion
 
@@ -138,7 +144,7 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private static void InitVariables()
         {
-            
+            OnOpenLink += OpenLink;
         }
 
         /// <summary>
@@ -154,11 +160,16 @@ namespace UnityGamesToolkit.Runtime
         /// </summary>
         private static void ClearVariables()
         {
-            
+            OnOpenLink -= OpenLink;
         }
 
         #endregion
-        
+
+        private static void OpenLink(string url)
+        {
+            Application.OpenURL(url);
+        }
+
         #endregion
     }
 }

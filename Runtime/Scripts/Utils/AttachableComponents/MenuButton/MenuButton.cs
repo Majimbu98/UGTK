@@ -11,8 +11,6 @@ public class MenuButton : MonoBehaviour
 // Defines variables and properties
 #region Variables & Properties
 
-[SerializeField] private string sceneToOpen;
-
 [SerializeField] private List<GameObject> gameObjectsToActivate;
 
 [SerializeField] private List<GameObject> gameObjectsToDeactivate;
@@ -24,7 +22,7 @@ public class MenuButton : MonoBehaviour
 // Defines methods for the new script
 #region Methods
 
-public void OpenScene()
+public void OpenScene(string sceneToOpen)
 {
     SceneManager.LoadScene(sceneToOpen);
 }
@@ -64,6 +62,11 @@ public void ChangeInteractivable(Button button)
 public void ChangeLanguage(S_Language newLanguage)
 {
     EventManager.OnSetNewLanguage?.Invoke(newLanguage);
+}
+
+public void OpenUrl(string url)
+{
+    EventManager.OnOpenLink?.Invoke(url);
 }
 
 #endregion
