@@ -50,6 +50,10 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnUpgradeVolume += ChangeVolume;
             EventManager.OnMuteChannel += MuteVolume;
             EventManager.OnDemuteChannel += DemuteVolume;
+            EventManager.OnMuteAudio += MuteAudio;
+            EventManager.OnDeMuteAudio += DeMuteAudio;
+            EventManager.OnMuteCluster += MuteAudioCluster;
+            EventManager.OnDeMuteCluster += DeMuteAudioCluster;
             EventManager.OnPlayAudioWithActionAtEnd += SpawnAudioWithActionAtEnd;
             
             EventManager.OnPlayAudioCluster += PlayAudioCluster;
@@ -68,6 +72,10 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnUpgradeVolume -= ChangeVolume;
             EventManager.OnMuteChannel -= MuteVolume;
             EventManager.OnDemuteChannel -= DemuteVolume;
+            EventManager.OnMuteAudio -= MuteAudio;
+            EventManager.OnDeMuteAudio -= DeMuteAudio;
+            EventManager.OnMuteCluster -= MuteAudioCluster;
+            EventManager.OnDeMuteCluster -= DeMuteAudioCluster;
             EventManager.OnPlayAudioWithActionAtEnd -= SpawnAudioWithActionAtEnd;
             
             EventManager.OnPlayAudioCluster -= PlayAudioCluster;

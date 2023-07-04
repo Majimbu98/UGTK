@@ -5,14 +5,8 @@ using UnityEngine;
 
 namespace UnityGamesToolkit.Runtime
 {
-    public abstract class S_Dictionary<T, T1> : ScriptableObject
+    public abstract class S_Dictionary<T, T1> : S_Collector<BiClass<T, T1>>
     {
-        // Defines variables and properties
-        #region Variables & Properties
         
-        [SerializeField] public List<BiClass<T, T1>> list;
-
-        #endregion
-
     }
 }

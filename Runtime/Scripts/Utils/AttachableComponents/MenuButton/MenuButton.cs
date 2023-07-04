@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityGamesToolkit.Runtime;
 
 public class MenuButton : MonoBehaviour
 {
@@ -52,6 +54,16 @@ public void QuitGame()
 #else
             Application.Quit();
 #endif
+}
+
+public void ChangeInteractivable(MenuButton  button)
+{
+    button.GetComponent<Button>().interactable = !button.GetComponent<Button>().interactable;
+}
+
+public void ChangeLanguage(S_Language newLanguage)
+{
+    
 }
 
 #endregion
