@@ -235,12 +235,13 @@ namespace UnityGamesToolkit.Runtime
                 }
                 else
                 {
-                    EventManager.OnStopAudio?.Invoke(audioCluster.CurrentSong());
+                    S_Audio audio = audioCluster.CurrentSong();
+                    EventManager.OnStopAudio?.Invoke(audio);
                     audioCluster.IncreaseSongIndex();
                     if (audioCluster.ExistCurrentSong())
                     {
-                        EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
-                            () => { NextAudioCluster(audioCluster); });
+                        audio = audioCluster.CurrentSong();
+                        EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audio, () => { NextAudioCluster(audioCluster); });
                     }
                     else
                     {
