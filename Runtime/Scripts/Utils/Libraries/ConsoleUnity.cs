@@ -12,5 +12,19 @@ namespace UnityGamesToolkit.Runtime
             string coloredMessage = $"<color=#{hexColor}>{message}</color>";
             Debug.Log(coloredMessage);
         }
+
+        public static void NullReference(string message)
+        {
+            string hexColor = ColorUtility.ToHtmlStringRGB(Color.blue);
+            string coloredMessage = $"<color=#{hexColor}>{message}</color>";
+            Debug.Log(coloredMessage);
+        }
+        
+        public static void ErrorColored(string message)
+        {
+            string hexColor = ColorUtility.ToHtmlStringRGB(Color.red);
+            string coloredMessage = $"<color=#{hexColor}>{message}</color>";
+            Debug.Log(coloredMessage);
+        }
     }
 }

@@ -110,6 +110,12 @@ namespace UnityGamesToolkit.Runtime
         #endregion
 
         #endregion
+
+        #region Project Settings
+
+        public static Action<S_Language> OnSetNewLanguage;
+
+        #endregion
         
         #endregion
 

@@ -63,7 +63,7 @@ public void ChangeInteractivable(MenuButton  button)
 
 public void ChangeLanguage(S_Language newLanguage)
 {
-    
+    EventManager.OnSetNewLanguage?.Invoke(newLanguage);
 }
 
 #endregion

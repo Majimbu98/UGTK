@@ -1,81 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityGamesToolkit.Runtime;
 
-public class LanguageManager : MonoBehaviour
+namespace UnityGamesToolkit.Runtime
 {
 
-// Defines variables and properties
-#region Variables & Properties
+    public class LanguageManager : Singleton<LanguageManager>
+    {
 
-[SerializeField] public 
+        // Defines variables and properties
+        #region Variables & Properties
 
-#endregion
+            [SerializeField] public S_Language currentLanguage;
 
-// Defines MonoBehaviour lifecycle events
-#region MonoBehaviour
+        #endregion
 
-
-#region Activation/Deactivation
-
-// Called when the object is enabled
-void OnEnable()
-{
-
-}
-
-// Called when the object is disabled
-void OnDisable()
-{
-
-}
-
-#endregion
-
-// Called when the new script is loaded into the Unity editor
-void Awake()
-{
-
-}
-
-// Called before the first frame of the game
-void Start()
-{
-
-}
-
-//Called during Unity executions
-#region Updates Events
-
-// Called once per frame
-void Update()
-{
-
-}
-
-// Called once per frame, but at fixed intervals
-void FixedUpdate()
-{
-
-}
-
-// Called once per frame, after all other updates have been executed
-void LateUpdate()
-{
-
-}
+        // Defines MonoBehaviour lifecycle events
+        #region MonoBehaviour
 
 
-#endregion
+        #region Activation/Deactivation
 
+            // Called when the object is enabled
+            void OnEnable()
+            {
+                EventManager.OnSetNewLanguage += UpdateCurrentLanguage;
+            }
 
-#endregion
+            // Called when the object is disabled
+            void OnDisable()
+            {
+                EventManager.OnSetNewLanguage -= UpdateCurrentLanguage;
+            }
 
-// Defines methods for the new script
-#region Methods
+            #endregion
 
+            protected override void Awake()
+            {
+                base.Awake();
+                UpdateCurrentLanguage(currentLanguage);
+            }
 
+            #endregion
 
-#endregion
+        // Defines methods for the new script
+        #region Methods
 
+            private void UpdateCurrentLanguage(S_Language language)
+            { 
+                currentLanguage = language;
+            }
+
+        #endregion
+
+    }
 }

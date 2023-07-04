@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsPersistent: 1
   master: {fileID: 11400000, guid: 92a9dc086cd06a54e8674ab8f2276bdd, type: 2}
+  audioPooler: {fileID: 868562498864340298}
   reproducingCluster: []
 --- !u!114 &868562498864340298
 MonoBehaviour:
