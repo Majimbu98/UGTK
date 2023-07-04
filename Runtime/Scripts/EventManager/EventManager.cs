@@ -72,11 +72,6 @@ namespace UnityGamesToolkit.Runtime
         public static Action<S_AudioCluster> OnPlayAudioCluster;
 
         /// <summary>
-        /// Event action invoked when the next audio cluster song starts playing.
-        /// </summary>
-        public static Action<S_AudioCluster> OnNextAudioCluster;
-
-        /// <summary>
         /// Event action invoked when an audio cluster stops playing.
         /// </summary>
         public static Action<S_AudioCluster> OnStopAudioCluster;

@@ -57,7 +57,6 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnPlayAudioWithActionAtEnd += SpawnAudioWithActionAtEnd;
             
             EventManager.OnPlayAudioCluster += PlayAudioCluster;
-            EventManager.OnNextAudioCluster += NextAudioCluster;
             EventManager.OnStopAudioCluster += StopAudioCluster;
         }
 
@@ -79,7 +78,6 @@ namespace UnityGamesToolkit.Runtime
             EventManager.OnPlayAudioWithActionAtEnd -= SpawnAudioWithActionAtEnd;
             
             EventManager.OnPlayAudioCluster -= PlayAudioCluster;
-            EventManager.OnNextAudioCluster -= NextAudioCluster;
             EventManager.OnStopAudioCluster -= StopAudioCluster;
         }
 
@@ -215,9 +213,9 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="audioCluster">The audio cluster to play.</param
         private void PlayAudioCluster(S_AudioCluster audioCluster)
         {
+            S_Audio audio = audioCluster.CurrentSong();
             audioCluster.ResetIndex();
-            EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
-                () => { EventManager.OnNextAudioCluster?.Invoke(audioCluster); });
+            EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audio, () => { NextAudioCluster(audioCluster); }); 
             reproducingCluster.Add(audioCluster);
         }
         
@@ -232,8 +230,8 @@ namespace UnityGamesToolkit.Runtime
             {
                 if (audioCluster.CurrentSong().content.loop)
                 {
-                    EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
-                        () => { EventManager.OnNextAudioCluster?.Invoke(audioCluster); });
+                    S_Audio audio = audioCluster.CurrentSong();
+                    EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audio, () => { NextAudioCluster(audioCluster); });
                 }
                 else
                 {
@@ -242,7 +240,7 @@ namespace UnityGamesToolkit.Runtime
                     if (audioCluster.ExistCurrentSong())
                     {
                         EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audioCluster.CurrentSong(),
-                            () => { EventManager.OnNextAudioCluster?.Invoke(audioCluster); });
+                            () => { NextAudioCluster(audioCluster); });
                     }
                     else
                     {
@@ -259,7 +257,6 @@ namespace UnityGamesToolkit.Runtime
         private void StopAudioCluster(S_AudioCluster audioCluster)
         {
             reproducingCluster.Remove(audioCluster);
-            EventManager.OnStopAudio?.Invoke(audioCluster.CurrentSong());
             audioCluster.ResetIndex();
         }
 
