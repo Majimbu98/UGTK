@@ -213,8 +213,8 @@ namespace UnityGamesToolkit.Runtime
         /// <param name="audioCluster">The audio cluster to play.</param
         private void PlayAudioCluster(S_AudioCluster audioCluster)
         {
-            S_Audio audio = audioCluster.CurrentSong();
             audioCluster.ResetIndex();
+            S_Audio audio = audioCluster.CurrentSong();
             EventManager.OnPlayAudioWithActionAtEnd?.Invoke(audio, () => { NextAudioCluster(audioCluster); }); 
             reproducingCluster.Add(audioCluster);
         }
