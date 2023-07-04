@@ -56,9 +56,9 @@ public void QuitGame()
 #endif
 }
 
-public void ChangeInteractivable(MenuButton  button)
+public void ChangeInteractivable(Button button)
 {
-    button.GetComponent<Button>().interactable = !button.GetComponent<Button>().interactable;
+    button.interactable = !button.interactable;
 }
 
 public void ChangeLanguage(S_Language newLanguage)
