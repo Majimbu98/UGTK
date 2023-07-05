@@ -145,6 +145,7 @@ namespace UnityGamesToolkit.Runtime
                 AudioPoolable audioPoolable = clipInExecution[audio];
                 clipInExecution.Remove(audio);
                 IPoolable poolable = (IPoolable)audioPoolable;
+                poolable.SetActionOnDespawn(()=>{});
                 poolable.Despawn();
             }
         }

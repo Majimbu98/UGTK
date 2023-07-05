@@ -47,9 +47,7 @@ namespace UnityGamesToolkit.Runtime
                             !IsObject<Vector2>(scriptableObject))
                         {
                             element.firstValue = null;
-                            ConsoleUtility.LogColored("Error, link on " + this.gameObject.name +
-                                                      " only Scriptable Data containers with primitive variables",
-                                Color.blue);
+                            ConsoleUtility.LogColored("Error, link on " + this.gameObject.name + " only Scriptable Data containers with primitive variables", Color.blue);
                         }
                     }
                 }
